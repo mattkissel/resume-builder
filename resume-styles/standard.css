@@ -1,0 +1,80 @@
+
+body{
+    align-items: stretch;
+    flex-direction: row;
+    width:800px;
+    font-size:12pt;
+    color: rgb(66, 66, 66);
+    
+    margin:35pt auto 100pt auto;
+}
+ul{
+    margin-top: 0;
+}
+#contact-info{
+    text-align: center;
+    margin-right: 10pt;
+    margin-left: 10pt;
+}
+#contact-info>div:not(#name){
+    display:inline;
+    
+}
+#contact-info>div:not(#name):not(#phone-number){
+    padding-left:5pt;
+    border-left: solid black 1px; 
+}
+
+
+#name{
+    font-size:30pt;
+}
+#resume-content{
+    /* going to consider changing this to a dynamic div when we use jQuery */
+    margin-right: 10pt;
+}
+.section{
+    margin-top:10pt;
+}
+.section-header{
+    font-size: 18pt;
+    font-weight: bold;
+    border-bottom: solid 1px;
+    margin-bottom:5pt;
+    font-family: Helvetica, sans-serif;
+}
+.company-name,.school-name{
+    font-weight: bold;
+    font-size:larger;
+}
+.job-title,.list-title,.activity-title{
+    font-weight:bold;
+}
+.company-name{
+    flex-basis:80%;
+}
+.company{
+    margin-bottom:10pt;
+}
+.job-dates{
+    flex-basis:20%;
+    text-align:right;
+}
+.essentials,.skill-lists{
+    flex-wrap: wrap; 
+    display: flex;
+    font-family: Helvetica, sans-serif;
+}
+.essentials>div{
+    flex-basis:50%;
+}
+.hidden{
+    display: none;
+}
+.skill-lists>ul{
+    /* not sure why it needs to be less than 50, it has no margins */
+    flex-basis:42%;
+}
+.school-location,.date{
+    text-align: right;
+}

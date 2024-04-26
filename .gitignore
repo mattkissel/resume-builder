@@ -1,0 +1,5 @@
+exported-resumes/*
+resume.html
+
+# exception to the rule
+!exported-resumes/README.md

@@ -1,0 +1,106 @@
+@font-face {
+    font-family: "OpenSans";
+    src: url("../fonts/OpenSans-Regular.ttf");
+}
+body{
+    width:800px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: OpenSans, Helvetica, sans-serif;
+    font-size:10pt;
+    color: rgb(66, 66, 66);
+    margin:35pt auto 100pt auto;
+}
+
+/*This is resume-building breaking*/
+#printable-resume{
+    
+}
+#resume{
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+}
+ul{
+    margin-top: 0;
+    margin-bottom:0;
+}
+#contact-info{
+    flex: 1;
+    margin-right: 10pt;
+    margin-left: 10pt;
+    font-weight: bold;
+}
+#name{
+    font-size:30pt;
+    color:#ac3125;
+}
+#resume-content{
+    /* going to consider changing this to a dynamic div when we use jQuery */
+    flex: 10;
+    margin-right: 10pt;
+}
+.section{
+    margin-top:10pt;
+}
+.section-header{
+    color:#ac3125;
+    font-size: larger;
+    font-weight: bold;
+    border-bottom: solid 1px;
+    text-transform: uppercase;
+}
+
+.school-name,.job-title{
+    font-weight: bold;
+    font-size:larger;
+    /* flex-basis:70%; */
+    text-decoration:underline;
+}
+.list-title,.activity-title,.title{
+    font-weight:bold;
+    text-decoration:underline;
+}
+.company-name{
+    flex-basis:70%;
+}
+.company,.activity{
+    margin-bottom:10pt;
+}
+.job-dates{
+    flex-basis:20%;
+}
+.essentials,.skill-lists{
+    flex-wrap: wrap; 
+    display: flex;
+    align-items: stretch;
+    flex-grow: 1;
+}
+ul>.bold,.company-name,.major{
+    font-weight: bold;
+}
+/* .essentials .title{
+    flex-basis:80%;
+    
+} */
+.essentials>div:nth-child(odd){
+    flex-basis:70%;
+}
+.essentials>div:nth-child(even){
+    flex-basis:30%;
+}
+
+
+.hide{
+    display: none;
+}
+.skill-lists>ul{
+    /* not sure why it needs to be less than 50, it has no margins */
+    flex-basis:42%;
+}
+
+.school-location,.date,.location{
+    text-align: right;
+    font-weight: bold;
+    /* flex-grow: 1; */
+}

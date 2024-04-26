@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+    <script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+        integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+    <script src="js/resume-builder.js"></script>
+    <link rel="stylesheet" type="text/css" href="resume-builder.css" />
+</head>
+<!-- <form> -->
+<body>
+<div id="print-space">
+<div id="resume">
+    <!-- we might want to move this to the head then, dynamically add it to print in resume-builder.js -->
+    <link rel="stylesheet" type="text/css" id="resume-style" href="resume-styles/vermillion.css" />
+    <div id="contact-info" >
+        <div id="name"></div>
+        <div id="phone-number"></div>
+        <div id="email"></div>
+        <div id="website"></div>
+    </div>
+
+    <!-- could consider renaming this since contact info is sort of content -->
+    <div id="resume-content">
+
+    <div class="section" id="education">
+        <div class="section-header" >Education</div>
+        <div class="school">
+        <div class="essentials">
+            <div class="school-name"></div>
+            <div class="location"></div>
+            <div class="major"></div>
+            <div class="date"></div>
+        </div>
+        <div class="minor"></div>
+        <div class="gpa"></div>
+        <div class="description"></div>
+        </div>
+    </div>
+
+    <div class="section" id="work-experience">
+        <div class="section-header">Work Experience</div>
+        <div class="company">
+            <div class="essentials">
+            <div class="job-title title"></div>
+            <div class="job-dates date"></div>
+            <div class="company-name"></div>
+            <div class="location"></div>
+            
+            </div>
+            <div class="description">Here's a description of what my general responsibilities were.</div>
+            <ul class="responsibilities">
+                <li >Important Project 1.<span class="handle">&#8645;</span></li>
+                <li>Other Project 2<span class="handle">&#8645;</span></li>
+                <li>Other Project 3<span class="handle">&#8645;</span></li>
+                <li>Other Project 4<span class="handle">&#8645;</span></li>
+                <li>Other Project 5<span class="handle">&#8645;</span></li>
+                <li>Other Project 6<span class="handle">&#8645;</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section" id="skills">
+    <div class="section-header">Skills</div>
+    <div class="skill-lists">
+    <ul class="skill-list">
+        <div class="bold title">Computer Skills</div>
+        <li class="ui-state-default">HTML/CSS and Javascript</li>
+        <li class="ui-state-default">PHP and MySQL</li>
+        <li class="ui-state-default">C# and XNA</li>
+        <li class="ui-state-default">Bash</li>
+    </ul>
+    <ul class="skill-list">
+            <div class="bold title">Language Skills</div>
+            <li>Russian - Beginner</li>
+            <li>English - Native</li>
+            <li>Spanish - Intermediate</li>
+        </ul>
+    
+    </div></div>
+  
+   
+    <div class="section" id="activites">
+    <div class="section-header">Activities</div>
+    <div class="activity">
+        <div class="essentials" >
+        <div class="activity-title title">Fan of being a Fan Club</div>
+        <div class="date">3/2004-3/2012</div></div>
+        <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie urna quis vehicula 
+        tincidunt. Praesent commodo risus velit, id gravida velit bibendum ut. Morbi fringilla, 
+        massa aliquet euismod pretium, metus sapien porttitor risus, sed tempus est elit vel urna.
+        </div></div>
+    </div>
+
+            
+    </div><!-- Resume Content -->
+</div><!-- Resume -->
+</div><!-- Print Space-->
+    <a href="#" onclick="downloadResume(this.parentNode)">Download Resume</a>
+    <select id="style-change">
+        <option value="vermillion">Vermillion</option>
+        <option value="standard">Standard</option>
+    </select>
+    <button onclick="loadNewStyles()">Reload Styles</button>
+    <div class="dropdown">
+        <button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="#" onclick="addItem('#education-template','#resume-content')" class="add-section">Add New Education Section</a>
+            <a href="#" onclick="addItem('#activities-template','#resume-content')" class="add-section">Add Activity Section</a>
+            <a href="#" onclick="addItem(this)" class="add-section">Link 3</a>
+        </div>
+    </div>
+<!-- TEMPLATES FOR ADDING NEW SECTIONS -->
+<template id="education-template">
+<div class="section" id="education">
+    <div class="section-header">Education</div>
+    <div class="essentials">
+        <div class="school-name" contenteditable="true"></div>
+        <div class="location" contenteditable="true"></div>
+        <div class="major" contenteditable="true"></div>
+        <div class="date" contenteditable="true"></div>
+    </div>
+    <div class="minor" contenteditable="true"></div>
+    <div class="gpa" contenteditable="true"></div>
+    <div class="description" contenteditable="true"></div>
+</div>
+</template>
+
+<template id="school-template">
+<div class="school">
+    <div class="essentials">
+        <div class="school-name"></div>
+        <div class="location"></div>
+        <div class="major"></div>
+        <div class="date"></div>
+    </div>
+    <div class="minor"></div>
+    <div class="gpa"></div>
+    <div class="description"></div>
+</div>
+</template>
+
+<template id="activities-template">
+<div class="section" id="activites">
+    <div class="section-header">Activities</div>
+    <div class="activity" contenteditable="true">
+        <div class="essentials" contenteditable="true">
+        <div class="activity-title title" contenteditable="true">Fan of being a Fan Club</div>
+        <div class="date" contenteditable="true">3/2004-3/2012</div>
+    </div>
+        <div class="description" contenteditable="true">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla molestie urna quis vehicula 
+        tincidunt. Praesent commodo risus velit, id gravida velit bibendum ut. Morbi fringilla, 
+        massa aliquet euismod pretium, metus sapien porttitor risus, sed tempus est elit vel urna.
+        </div>
+    </div>
+</div>
+</template>
+
+</body>
+</html>

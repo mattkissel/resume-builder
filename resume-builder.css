@@ -1,0 +1,143 @@
+
+/*_______________________________________________________________________________________________*/
+/*Draggable styling*/
+.handle{
+  cursor:grab;
+  float: right;
+  margin-left: 2em;
+  /* font-size:large; */
+}
+
+/*_______________________________________________________________________________________________*/
+/* DROPDOWN CSS */
+/* Dropdown Button */
+.dropbtn {
+    background-color: rgb(211, 110, 84);
+    color: white;
+    padding: 5px 10px ;
+    font-size: 25pt;
+    border: none;
+    cursor: pointer;
+}
+  
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: rgb(165, 74, 52);;
+}
+  
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+  
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+  
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+  
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display:block;
+}
+
+/*_______________________________________________________________________________________________*/
+/* DEFAULT TEXT FOR ALL DIVS */
+.ui-sortable>li:empty:after{
+  content:'<span class="handle">&#8645;</span>';
+  color: rgb(179, 15, 15);
+}
+
+#email:empty:before{
+  content:"youremail@domain.com";
+  color: rgb(172, 172, 172);
+}
+#name:empty:before{
+  content:"FirstName Lastname";
+  color: rgb(172, 172, 172);
+}
+#phone-number:empty:before{
+  content:"###-####-####";
+  color: rgb(172, 172, 172);
+}
+#website:empty:before{
+  content:"https://www.lipsum.com/";
+  color: rgb(172, 172, 172);
+}
+.section-header:empty:before{
+  content:"Section, eg. Education, Work Experience, Skills, Activities";
+  color: rgb(172, 172, 172);
+}
+.school-name:empty:before{
+  content:"School Name";
+  color: rgb(172, 172, 172);
+}
+.location:empty:before{
+  content:"City, State, Country";
+  color: rgb(172, 172, 172);
+}
+.major:empty:before{
+  content:"BS in Major";
+  color: rgb(172, 172, 172);
+}
+.date:empty:before{
+  content:"10/2000 - 10/2000";
+  color: rgb(172, 172, 172);
+}
+.gpa:empty:before{
+  content:"GPA:0.0/0.0";
+  color: rgb(172, 172, 172);
+}
+.minor:empty:before{
+  content:"Minor: Your College Minor";
+  color: rgb(172, 172, 172);
+}
+/* maybe separate out descriptions for jobs, activities and educaiton */
+.description:empty:before{
+  content:"Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study";
+  color: rgb(172, 172, 172);
+}
+.job-title:empty:before{
+  content:"Your Job Title Here";
+  color: rgb(172, 172, 172);
+}
+.company-name:empty:before{
+  content:"Company Name Here";
+  color: rgb(172, 172, 172);
+}
+.responsibilities>li:empty:before{
+  content:"Responsibilites list them here";
+  color: rgb(172, 172, 172);
+}
+.skill-list>li:empty:before{
+  content:"List some of your skills or certs";
+  color: rgb(172, 172, 172);
+}
+.skill-list .title:empty:before{
+  content:"Type of Skills/certs, e.g. Language Skills, Computer Skills,etc ";
+  color: rgb(172, 172, 172);
+}
+.activity .title:empty:before{
+  content:"Title of your Activity";
+  color: rgb(172, 172, 172);
+}
+/* minor and GPA maybe scholarships */
