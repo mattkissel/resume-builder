@@ -5,7 +5,7 @@
   cursor:grab;
   float: right;
   margin-left: 2em;
-  /* font-size:large; */
+  font-size:small;
 }
 
 /*_______________________________________________________________________________________________*/
@@ -139,5 +139,15 @@
 .activity .title:empty:before{
   content:"Title of your Activity";
   color: rgb(172, 172, 172);
+}
+
+
+
+#sortable-list {
+}
+
+.sortable-item {
+  cursor: move;
+
 }
 /* minor and GPA maybe scholarships */
