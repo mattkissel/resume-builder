@@ -55,15 +55,7 @@ window.onclick = function(event) {
   }
 }
 
-// this is the html to create a dropdown
-/* <div class="dropdown">
-<button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
-<div id="myDropdown" class="dropdown-content">
-    <a href="#" onclick="addItem(this)" class="add-section">Add New Section</a>
-    <a href="#" onclick="addItem(this)" class="add-section">Link 2</a>
-    <a href="#" onclick="addItem(this)" class="add-section">Link 3</a>
-</div>
-</div> */
+
 function addItem(templateId, parentId){
   // console.log($(itemType).attr("class"));
   // switch($(itemType).attr("class")){

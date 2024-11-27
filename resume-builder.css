@@ -1,12 +1,20 @@
 
 /*_______________________________________________________________________________________________*/
-/*Draggable styling*/
+/*Sortable styling*/
+.controls{
+  float: right;
+  font-size:medium;
+  display:inline-block;
+}
 .handle{
   cursor:grab;
-  float: right;
-  margin-left: 2em;
-  font-size:small;
+  /* margin-left: 2em; */
 }
+.sortable-list > *{
+  border:2px solid rgb(179, 15, 15);
+  border-radius: 5px;
+  padding:2px;
+} 
 
 /*_______________________________________________________________________________________________*/
 /* DROPDOWN CSS */

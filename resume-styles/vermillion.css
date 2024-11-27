@@ -25,6 +25,9 @@ ul{
     margin-top: 0;
     margin-bottom:0;
 }
+li{
+    margin-top: 0.2rem;
+}
 #contact-info{
     flex: 1;
     margin-right: 10pt;

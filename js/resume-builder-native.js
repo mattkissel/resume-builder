@@ -3,60 +3,59 @@
 window.onload = function() {
 
 
-// Get the #resume element
-const resume = document.getElementById('resume');
-console.log("resume :"+resume);
-// Function to wrap text nodes in a span with contenteditable
-function makeTextNodesEditable(parent) {
+  addSortableControls(document.getElementById('resume'));
+  makeContentEditable(document);
 
-  parent.querySelectorAll('*').forEach((element) => {
-    console.log(element.tagName + " with children " + element.children.length ); // Logs tag names of all descendant elements
-    if(element.children.length == 0 && !element.classList.contains("handle"))
-    {
-      element.setAttribute('contenteditable', 'true');
-    }
+//create sortable lists
+const sortableLists = document.getElementsByClassName('sortable-list');
+
+Array.from(sortableLists).forEach((sortableList) => {
+    // var sortable = SortableMin.create(sortableList,{});
+    new Sortable(sortableList,
+      {
+        filter: '.fixed', // Define a selector for fixed items
+        preventOnFilter: false, // Allow clicks and interaction but no drag
+        handle:'.handle',
+        animation: 150
+      }
+    );
   });
-
 }
 
-// const parent = document.getElementById('resume');
 
-// Array.from(parent.children).forEach((child) => {
-//   console.log(child.tagName); // Logs tag names of child elements
-// });
-//   parent.childNodes.forEach((node) => {
-//     if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() !== '') {
-//       // Create a span to wrap the text node
-//       const span = document.createElement('span');
-//       span.setAttribute('contenteditable', 'true');
-//       span.textContent = node.nodeValue;
-//       parent.replaceChild(span, node);
-//     } else if (node.nodeType === Node.ELEMENT_NODE) {
-//       // Recursively apply to child elements
-//       makeTextNodesEditable(node);
-//     }
-//   });
-// }
-
-// Apply to #resume
-makeTextNodesEditable(resume);
-
-
-const sortableList = document.getElementsByClassName('sortable-list')[0];
-// var sortable = SortableMin.create(sortableList,{});
-new Sortable(sortableList,
-  {
-    handle:'.handle',
-    animation: 150
-  }
-);
-};
 
 // if we want to change styles before we download the resume
 function loadNewStyles(){
     newStyle = document.getElementById("style-change").value;
     document.getElementById("resume-style").setAttribute("href","resume-styles/"+newStyle+".css")
 }
+
+
+// we have to add sortable for items we will need to call it again if we add more content
+function addSortableControls(element)
+{
+  var controls = element.querySelectorAll(".controls");
+  var controlTemplate = document.querySelector("#controls-template")
+  console.log("conttemp: "+controlTemplate);
+  controls.forEach((control) => {
+    var clone = controlTemplate.content.cloneNode(true);
+    control.append(clone);
+  });
+
+}
+function makeContentEditable(element)
+{
+  // Make content editable
+  element.querySelectorAll('*').forEach((e) => {
+    if(e.children.length == 0 
+      && !e.classList.contains("handle")
+      && !e.classList.contains("delete-sortable"))
+    {
+      e.setAttribute('contenteditable', 'true');
+    }
+  });
+}
+
 
 // export the html that will be used in our document
 function downloadResume(downloadNode){
@@ -73,7 +72,7 @@ function downloadResume(downloadNode){
 
 
 function dropDown(dropDown) {
-  $(".dropdown-content")[0].classList.toggle("show");
+  dropDown.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
 }
 
 // window.onclick = function(event) {
@@ -88,39 +87,20 @@ function dropDown(dropDown) {
 //   }
 // }
 
-// this is the html to create a dropdown
-/* <div class="dropdown">
-<button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
-<div id="myDropdown" class="dropdown-content">
-    <a href="#" onclick="addItem(this)" class="add-section">Add New Section</a>
-    <a href="#" onclick="addItem(this)" class="add-section">Link 2</a>
-    <a href="#" onclick="addItem(this)" class="add-section">Link 3</a>
-</div>
-</div> */
-function addItem(templateId, parentId){
-  // console.log($(itemType).attr("class"));
-  // switch($(itemType).attr("class")){
-  //   case "add-section":
-  //     var template = $("#education-template").html();
-  //     console.log("adding a new section...education");
-  //     console.log($(itemType).parent().parent());
-  //     $(itemType).parent().parent().before(template);
-  //     break;
-  //   case "add-something-else":
-  //     // code block
-  //     break;
-  //   default:
-  //     console.log("we've added an invalid class");
-  // }
 
+function addItem(templateId, parentNode){
+    // Test to see if the browser supports the HTML template element by checking
+    // for the presence of the template element's content attribute.
+    if("content" in document.createElement("template"))
+    {
+      var template = document.getElementById(templateId);
+    
+      var clone = template.content.cloneNode(true);
 
-    var template = $(templateId).html();
-    console.log("adding a new section...".templateId);
-    //console.log($(itemType).parent().parent());
-    //$(itemType).parent().parent().before(template);
-    $(parentId).append(template)
-  // var temp = document.getElementsByTagName("template")[0];
-  // var clon = temp.content.cloneNode(true);
-  // document.body.appendChild(clon);
+      console.log("adding a new section...".templateId);
 
+      makeContentEditable(clone);
+
+      parentNode.append(clone);
+    }
 }
