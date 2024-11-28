@@ -99,6 +99,7 @@ const templateHTML = `
                 <div class="essentials" >
                     <div class="activity-title title">Fan of being a Fan Club</div>
                     <div class="date" >3/2004-3/2012</div>
+                    <div class="company-name"><!-- Probably want to change this in the future --></div>
                     <div class="location"></div> 
                 </div>
                 <div class="description" >
@@ -119,6 +120,8 @@ const templateHTML = `
         <div class="essentials" >
             <div class="activity-title title">Fan of being a Fan Club</div>
             <div class="date" >3/2004-3/2012</div>
+            <div class="company-name"><!-- Probably want to change this in the future --></div>
+            <div class="location"></div> 
         </div>
         <div class="description" >
             It is a long established fact that a reader will be distracted by the readable content of a page 

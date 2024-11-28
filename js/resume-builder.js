@@ -11,15 +11,6 @@ window.onload = function() {
   setupLoadButton();
 }// END WINDOW ONLOAD
 
-function addListItems(element, templateId)
-{
-  let temp = document.querySelector(templateId)
-  console.log("templateId "+templateId);
-  let clone = temp.content.cloneNode(true);
-  setupElement(clone);
-
-  element.parentElement.insertBefore(clone, element);
-}
 
 
 // if we want to change styles before we download the resume
@@ -245,20 +236,33 @@ function dropDown(dropDown) {
 
 
 
-function addItem(templateId, parentNode){
+function addItemToTarget(templateId, parentNode){
     // Test to see if the browser supports the HTML template element by checking
     // for the presence of the template element's content attribute.
     if("content" in document.createElement("template"))
     {
-      var template = document.getElementById(templateId);
+      var template = document.querySelector(templateId);
     
       var clone = template.content.cloneNode(true);
 
       console.log("adding a new section...".templateId);
-      addSortableControls(clone);
-      makeContentEditable(clone);
-
+      setupElement(clone);
 
       parentNode.append(clone);
     }
+}
+
+function addListItems(element, templateId)
+{
+  // Test to see if the browser supports the HTML template element by checking
+  // for the presence of the template element's content attribute
+  if("content" in document.createElement("template"))
+  {
+    let temp = document.querySelector(templateId)
+    console.log("adding template of id "+templateId);
+
+    let clone = temp.content.cloneNode(true);
+    setupElement(clone);
+    element.parentElement.insertBefore(clone, element);
+  }
 }

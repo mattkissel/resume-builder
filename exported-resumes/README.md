@@ -1,1 +1,0 @@
-This folder is a place to store any resumes you have exported so that they aren't commited to the repo. I keep forgetting my folder structure so I have made this placeholder here to make sure to commit the empty folder.

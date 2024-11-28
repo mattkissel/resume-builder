@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- <script src="js/Sortable-1.15.4/Sortable.min.js"></script> -->
+    <script src="js/Sortable-1.15.4/Sortable.js"></script>
+    <script src="js/content-templates.js"></script>
+    <script src="js/resume-builder.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/resume-builder.css" />
+    <link rel="stylesheet" type="text/css" id="resume-style" href="css/resume-styles/vermillion.css" />
+</head>
+<!-- <form> -->
+<body>
+<div id="print-space">
+<div id="resume">
+    <!-- we might want to move this to the head then, dynamically add it to print in resume-builder.js -->
+    <link rel="stylesheet" type="text/css" id="resume-style" href="css/resume-styles/vermillion.css" />
+    <div id="contact-info" >
+        <div id="name"></div>
+        <div id="phone-number"></div>
+        <div id="email" placeholder="fuckin email eh"></div>
+        <div id="website"></div>
+    </div>
+
+    <!-- could consider renaming this since contact info is sort of content -->
+    <div id="resume-content" class="sortable-list">
+
+    <div class="section" id="education">
+        <span class="controls"></span>
+        <div class="section-header fixed" >Education</div>
+        <div class="schools-list sortable-list">
+        <div class="school">
+            <span class="controls"></span>
+            <div class="essentials">
+                <div class="school-name"></div>
+                <div class="location"></div>
+                <div class="major"></div>
+                <div class="date"></div>
+            </div>
+            <div class="minor"></div>
+            <div class="gpa"></div>
+            <div class="description"></div>
+        </div>
+        <button type="button" onclick="addListItems(this, '#school-template')">+</button>
+    </div>
+    </div>
+
+    <div class="section" id="work-experience">
+        <span class="controls"></span>
+        <div class="section-header">Work Experience</div>
+        <div class="companies-list sortable-list">
+        <div class="company">
+            <span class="controls"></span>
+            <div class="essentials">
+                <div class="job-title title"></div>
+                <div class="job-dates date"></div>
+                <div class="company-name"></div>
+                <div class="location"></div>
+            </div>
+            <div class="description">Here's a description of what my general responsibilities were.</div>
+            <ul class="sortable-list responsibilities">
+                <li><span>Important Project 1</span><span class="controls"></span></li>
+                <li><span>Other Project 2</span><span class="controls"></span></li>
+                <li><span>Other Project 3</span><span class="controls"></span></li>
+                <li><span>Other Project 4</span><span class="controls"></span></li>
+                <li><span>Other Project 5</span><span class="controls"></span></li>
+                <button type="button" onclick="addListItems(this, '#job-list-item-template')">+</button>
+            </ul>
+        </div>
+        <button type="button" onclick="addListItems(this, '#job-template')">+</button>
+        </div>
+    </div>
+
+    <div class="section" id="skills">
+        <span class="controls"></span>
+        <div class="section-header">Skills</div>
+        <div class="skill-lists sortable-list">
+            <ul class="skill-list sortable-list">
+                <span class="controls"></span>
+                <div class="bold title fixed">Computer Skills</div>
+                <li><span>HTML/CSS and Javascript</span><span class="controls"></span></li>
+                <li><span>PHP and MySQL</span><span class="controls"></span></li>
+                <li><span>C# and XNA</span><span class="controls"></span></li>
+                <li><span>Bash</span><span class="controls"></span></li>
+                <button type="button" onclick="addListItems(this, '#skill-list-item-template')">+</button>
+            </ul>
+            <ul class="skill-list sortable-list">
+                <span class="controls"></span>
+                    <div class="bold title fixed">Language Skills</div>
+                    <li><span>Russian - Beginner</span><span class="controls"></span></li>
+                    <li><span>English - Native</span><span class="controls"></span></li>
+                    <li><span>Spanish - Intermediate</span><span class="controls"></span></li>
+                    <button type="button" onclick="addListItems(this, '#skill-list-item-template')">+</button>
+            </ul>
+            <button type="button" onclick="addListItems(this, '#skill-list-template')">+</button>
+        </div>
+    </div>
+  
+   
+    <div class="section" id="activites">
+        <span class="controls"></span>
+        <div class="section-header">Activities</div>
+        <div class="activities-list sortable-list">
+            <div class="activity">
+                <span class="controls"></span>
+                <div class="essentials" >
+                    <div class="activity-title title">Fan of being a Fan Club</div>
+                    <div class="date">3/2004-3/2012</div>
+                    <div class="company-name"><!-- Probably want to change this in the future --></div>
+                    <div class="location"></div> 
+                </div>
+                <div class="description">It is a long established fact that a reader will be distracted by the readable content of a page 
+                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal 
+                    distribution of letters, as opposed to using 'Content here, content here', making it look like 
+                    readable English.
+                </div>
+            </div>
+            <button type="button" onclick="addListItems(this, '#activity-template')">+</button>
+        </div>
+    </div>
+
+            
+    </div><!-- Resume Content -->
+</div><!-- Resume -->
+</div><!-- Print Space-->
+
+<div><!-- Begin section of buttons for saving etc. -->
+    <a href="#" onclick="downloadResume(this.parentNode)">Export Resume</a>
+    <a href="#" onclick="saveBaseResume()">Save Master Resume</a>
+    <button id="load-button">Load File</button>
+    <input type="file" id="file-input" accept=".html" style="display: none;">
+
+    <select id="style-change">
+        <option value="vermillion">Vermillion</option>
+        <option value="standard">Standard</option>
+    </select>
+    <button onclick="loadNewStyles()">Reload Styles</button>
+    <div class="dropdown">
+        <button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
+        <div id="myDropdown" class="dropdown-content">
+            <!-- <a href="#" onclick="addItem('education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a> -->
+            <a href="#" onclick="addItemToTarget('#education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a>
+            <a href="#" onclick="addItemToTarget('#activities-template', document.getElementById('resume-content'))" class="add-section">Add Activity Section</a>
+            <a href="#" onclick="addItemToTarget(this)" class="add-section">Link 3</a>
+        </div>
+    </div>
+</div> <!-- end buttons saving etc -->
+
+
+
+</body>
+</html>
