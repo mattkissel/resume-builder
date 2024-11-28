@@ -39,6 +39,8 @@ function downloadResume(downloadNode){
 };
 
 
+
+
 function dropDown(dropDown) {
   $(".dropdown-content")[0].classList.toggle("show");
 }
@@ -54,7 +56,6 @@ window.onclick = function(event) {
     }
   }
 }
-
 
 function addItem(templateId, parentId){
   // console.log($(itemType).attr("class"));

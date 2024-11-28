@@ -1,4 +1,17 @@
 
+/*__________________________________*/
+/* Controls styling */
+.delete-sortable{
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+
 /*_______________________________________________________________________________________________*/
 /*Sortable styling*/
 .controls{
@@ -11,11 +24,13 @@
   /* margin-left: 2em; */
 }
 .sortable-list > *{
-  border:2px solid rgb(179, 15, 15);
+  border:2px solid rgb(114, 114, 114);
   border-radius: 5px;
   padding:2px;
 } 
-
+.do-not-export{
+  opacity: 50%;
+}
 /*_______________________________________________________________________________________________*/
 /* DROPDOWN CSS */
 /* Dropdown Button */
@@ -27,7 +42,9 @@
     border: none;
     cursor: pointer;
 }
-  
+button{
+  cursor: pointer;
+}
 /* Dropdown button on hover & focus */
 .dropbtn:hover, .dropbtn:focus {
   background-color: rgb(165, 74, 52);;
@@ -88,7 +105,7 @@
   color: rgb(172, 172, 172);
 }
 #website:empty:before{
-  content:"https://www.lipsum.com/";
+  content:"https://www.fakesite.com/";
   color: rgb(172, 172, 172);
 }
 .section-header:empty:before{
