@@ -5,11 +5,13 @@ window.onload = function() {
   var resume = document.getElementById('resume')
   setupElement(resume);
   makeListsSortable(resume);
+  makeContentEditable(resume);
 }// END WINDOW ONLOAD
 
 function addListItems(element, templateId)
 {
   let temp = document.querySelector(templateId)
+  console.log("templateId "+templateId);
   let clone = temp.content.cloneNode(true);
   setupElement(clone);
   element.parentElement.insertBefore(clone, element);
@@ -71,11 +73,13 @@ function makeContentEditable(element)
 {
   // Make content editable
   element.querySelectorAll('*').forEach((e) => {
+    
     if(e.children.length == 0 
       && !e.classList.contains("handle")
       && !e.classList.contains("delete-sortable")
-      && !e == 'BUTTON')
+      && e.tagName !== 'BUTTON')
     {
+      console.log("setting editable "+ e)
       e.setAttribute('contenteditable', 'true');
     }
   });

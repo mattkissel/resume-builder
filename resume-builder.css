@@ -10,7 +10,9 @@
   cursor: pointer;
   outline: inherit;
 }
-
+.controls{
+  /* margin-right:rem; */
+}
 
 /*_______________________________________________________________________________________________*/
 /*Sortable styling*/
@@ -23,7 +25,7 @@
   cursor:grab;
   /* margin-left: 2em; */
 }
-.sortable-list > *{
+.sortable-list > *:not(.section-header){
   border:2px solid rgb(114, 114, 114);
   border-radius: 5px;
   padding:2px;
