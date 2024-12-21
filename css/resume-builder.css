@@ -1,5 +1,5 @@
 
-/*__________________________________*/
+/*_______________________________________________________________________*/
 /* Controls styling */
 .delete-sortable{
   background: none;
@@ -14,7 +14,7 @@
   /* margin-right:rem; */
 }
 
-/*_______________________________________________________________________________________________*/
+/*________________________________________________________________________*/
 /*Sortable styling*/
 .controls{
   float: right;
@@ -92,6 +92,12 @@ button{
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display:block;
+}
+
+
+/* styles for the button section below the resume */
+#file-input{
+  display:none;
 }
 
 /*_______________________________________________________________________________________________*/

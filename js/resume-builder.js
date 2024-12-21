@@ -186,15 +186,23 @@ function downloadResume(downloadNode){
     
     //if the display checkboxes aren't checked we don't want to export them to the resume
     // they are in the controls so we need to check this before removing controls
-    cleanedPrint.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach(
-      (el) => {
-        console.log("found element " + el);
-        el.parentElement.parentElement.remove();
-    });
-
+    // cleanedPrint.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach(
+    //   (el) => {
+    //     console.log("found element " + el);
+    //     el.parentElement.parentElement.remove();
+    // });
+    cleanedPrint.querySelectorAll('.do-not-export').forEach((el) => {
+          console.log("found element " + el);
+          el.remove();
+      });
     //we need to remove all the controls and buttons
     cleanedPrint.querySelectorAll(".controls").forEach((el) => el.remove());
     cleanedPrint.querySelectorAll("button").forEach((el) => el.remove());
+    cleanedPrint.querySelectorAll("*").forEach((el) => {
+      el.removeAttribute("style");
+    });
+
+
     blob = new Blob(
       [cleanedPrint.innerHTML],
       {type: "text/html"});
