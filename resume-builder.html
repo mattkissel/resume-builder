@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!-- <script src="js/Sortable-1.15.4/Sortable.min.js"></script> -->
-    <script src="js/Sortable-1.15.4/Sortable.js"></script>
-    <script src="js/content-templates.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/Sortable-1.15.4/Sortable.js"></script> <!-- your local Sortable -->
     <script src="js/resume-builder.js"></script>
     <link rel="stylesheet" type="text/css" href="css/resume-builder.css" />
     <link rel="stylesheet" type="text/css" id="resume-style" href="css/resume-styles/vermillion.css" />
@@ -134,15 +133,20 @@
         <option value="standard">Standard</option>
     </select>
     <button onclick="loadNewStyles()">Reload Styles</button>
-    <div class="dropdown">
+    <div id="section-controls">
+  <button type="button" onclick="addMainSection('education-section')">Add Education Section</button>
+  <button type="button" onclick="addMainSection('work-section')">Add Work Section</button>
+  <button type="button" onclick="addMainSection('skills-section')">Add Skills Section</button>
+</div>
+    <!-- <div class="dropdown">
         <button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
         <div id="myDropdown" class="dropdown-content">
-            <!-- <a href="#" onclick="addItem('education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a> -->
+            <a href="#" onclick="addItem('education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a>
             <a href="#" onclick="addItemToTarget('#education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a>
             <a href="#" onclick="addItemToTarget('#activities-template', document.getElementById('resume-content'))" class="add-section">Add Activity Section</a>
             <a href="#" onclick="addItemToTarget(this)" class="add-section">Link 3</a>
         </div>
-    </div>
+    </div> -->
 </div> <!-- end buttons saving etc -->
 
 

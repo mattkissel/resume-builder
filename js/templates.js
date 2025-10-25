@@ -1,26 +1,132 @@
-// contains the templates for adding new sections
+// js/templates.js
+// Offline templates. All templates are strings keyed by name.
+// Use data-template="<name>" to reference them.
+window.ResumeTemplates = {
+  // SECTION TEMPLATES (one of each)
+  "education-section": `
+<section class="section education" data-type="education">
+  <div class="controls"></div>
+  <h2 class="section-header">Education</h2>
+  <div class="schools-list sortable-list">
+    <!-- existing entries will be inserted here -->
+  </div>
+  <div class="section-actions">
+    <button type="button" class="btn-add" data-action="add-entry" data-template="school-entry">Add School</button>
+  </div>
+</section>
+`,
+
+  "work-section": `
+<section class="section work-experience" data-type="work-experience">
+  <div class="controls"></div>
+  <h2 class="section-header">Work Experience</h2>
+  <div class="companies-list sortable-list">
+    <!-- job entries go here -->
+  </div>
+  <div class="section-actions">
+    <button type="button" class="btn-add" data-action="add-entry" data-template="job-entry">Add Job</button>
+  </div>
+</section>
+`,
+
+  "skills-section": `
+<section class="section skills" data-type="skills">
+  <div class="controls"></div>
+  <h2 class="section-header">Skills</h2>
+  <ul class="skill-list sortable-list">
+    <!-- skill items here -->
+  </ul>
+  <div class="section-actions">
+    <button type="button" class="btn-add" data-action="add-entry" data-template="skill-item">Add Skill</button>
+  </div>
+</section>
+`,
+
+  "activities-section": `
+<section class="section activities" data-type="activities">
+  <div class="controls"></div>
+  <h2 class="section-header">Activities</h2>
+  <div class="activities-list sortable-list"></div>
+  <div class="section-actions">
+    <button type="button" class="btn-add" data-action="add-entry" data-template="activity-entry">Add Activity</button>
+  </div>
+</section>
+`,
+
+  // ENTRY TEMPLATES (repeatable items inside sections)
+  "school-entry": `
+<div class="school entry">
+  <div class="controls"></div>
+  <div class="essentials">
+    <div class="school-name" contenteditable="true">University Name</div>
+    <div class="location" contenteditable="true">City, Country</div>
+    <div class="major" contenteditable="true">Major / Program</div>
+    <div class="date" contenteditable="true">Year - Year</div>
+  </div>
+  <div class="minor" contenteditable="true">Minor / certificate</div>
+  <div class="gpa" contenteditable="true">GPA: </div>
+  <div class="description" contenteditable="true">Short description</div>
+  <div class="entry-actions">
+    <button type="button" data-action="remove-entry">Remove</button>
+  </div>
+</div>
+`,
+
+  "job-entry": `
+<div class="company entry">
+  <div class="controls"></div>
+  <div class="essentials">
+    <div class="job-title title" contenteditable="true">Job Title</div>
+    <div class="job-dates date" contenteditable="true">Dates</div>
+    <div class="company-name" contenteditable="true">Company</div>
+    <div class="location" contenteditable="true">Location</div>
+  </div>
+  <div class="description" contenteditable="true">Short summary</div>
+
+  <ul class="responsibilities sortable-list">
+    <!-- responsibilities inserted here -->
+  </ul>
+
+  <div class="entry-actions">
+    <button type="button" data-action="add-entry" data-template="responsibility-item">Add Responsibility</button>
+    <button type="button" data-action="remove-entry">Remove Job</button>
+  </div>
+</div>
+`,
+
+  "responsibility-item": `
+<li class="responsibility-item"><span contenteditable="true">Responsibility or achievement</span>
+  <button type="button" data-action="remove-entry">✖</button>
+</li>
+`,
+
+  "skill-item": `
+<li class="skill-item"><span contenteditable="true">New Skill</span>
+  <button type="button" data-action="remove-entry">✖</button>
+</li>
+`,
+
+  "activity-entry": `
+<div class="activity entry">
+  <div class="controls"></div>
+  <div class="essentials">
+    <div class="activity-title title" contenteditable="true">Activity Title</div>
+    <div class="date" contenteditable="true">Dates</div>
+    <div class="company-name" contenteditable="true">Organization</div>
+    <div class="location" contenteditable="true">Location</div>
+  </div>
+  <div class="description" contenteditable="true">Short details</div>
+  <div class="entry-actions">
+    <button type="button" data-action="remove-entry">Remove</button>
+  </div>
+</div>
+`
+};
+
+
 const templateHTML = `
-<template id="education-template">
-    <div class="section" id="education">
-        <span class="controls"></span>
-        <div class="section-header" >Education</div>
-        <div class="schools-list sortable-list">
-            <div class="school">
-                <span class="controls"></span>
-                <div class="essentials">
-                    <div class="school-name"></div>
-                    <div class="location"></div>
-                    <div class="major"></div>
-                    <div class="date"></div>
-                </div>
-                <div class="minor"></div>
-                <div class="gpa"></div>
-                <div class="description"></div>
-            </div>
-            <button type="button" onclick="addListItems(this, '#school-template')">+</button>
-        </div>
-    </div>
-</template>
+
+
 
 
 
