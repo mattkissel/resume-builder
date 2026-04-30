@@ -7,45 +7,58 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
 // Assumes templates.js (window.ResumeTemplates) is loaded BEFORE this script.
 
 (function () {
-  // helper
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
-
+  let shadow;
+  
+  
   document.addEventListener('DOMContentLoaded', () => {
+    const host = document.getElementById('rb-host');
+    shadow = host.attachShadow({ mode: 'open' });
+    
+    // const content = shadow.querySelector('#rb-resume-content');
+    // if (!content || content.children.length > 0) return;
+    shadow.innerHTML = window.ResumeTemplates['resume-shell'];
+
+
+    buildDefaultResume()
     initFromExisting();
     setupGlobalClickHandlers();
     observeAddsForSortables();
   });
+  // helper
+  const $ = (sel, root = shadow) => root.querySelector(sel);
+  const $$ = (sel, root = shadow) => Array.from(root.querySelectorAll(sel));
+
+  
 
   function initFromExisting() {
     // Initial setup for any controls and sortable lists already in the page
     // Add controls for existing sections if empty
-    const resume = $('#resume');
+    const resume = $('#rb-resume');
     if (!resume) return;
 
     // If there are no main sections present, we may optionally insert defaults:
     // For compatibility with your existing HTML, don't overwrite. Just wire up sortables.
-    makeListsSortable(document);
+    makeListsSortable(shadow);
     addControlsToAll();
   }
 
   function addControlsToAll() {
     // Add control UI to any element that has a .controls placeholder
-    $$('.controls').forEach(ctrl => {
+    $$('.rb-controls').forEach(ctrl => {
       if (ctrl.dataset.hasControls) return;
       ctrl.dataset.hasControls = '1';
       // Use a simple handle, a checkbox to hide, and a delete button
       ctrl.insertAdjacentHTML('beforeend', `
-        <span class="handle" title="Drag to reorder">&#8645;</span>
-        <label class="hide-label"><input type="checkbox" class="hide-toggle" checked /></label>
-        <button type="button" class="delete-sortable" data-action="remove-entry" title="Remove">&#9747;</button>
+        <span class="rb-handle" title="Drag to reorder">&#8645;</span>
+        <label class="rb-hide-label"><input type="checkbox" class="rb-hide-toggle" checked /></label>
+        <button type="button" class="rb-delete-sortable" data-action="remove-entry" title="Remove">&#9747;</button>
       `);
     });
   }
 
   // Global click handlers (event delegation)
   function setupGlobalClickHandlers() {
-    document.body.addEventListener('click', (ev) => {
+    shadow.addEventListener('click', (ev) => {
       const btn = ev.target.closest('[data-action]');
       if (!btn) return;
 
@@ -65,13 +78,13 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     });
 
     // Toggle hide toggle (checkbox inside .controls)
-    document.body.addEventListener('change', (ev) => {
-      if (!ev.target.matches('.hide-toggle')) return;
+    shadow.addEventListener('change', (ev) => {
+      if (!ev.target.matches('.rb-hide-toggle')) return;
       const checked = ev.target.checked;
       // The controls container is likely inside the immediate entry/section
-      const entry = ev.target.closest('.entry, .section, .company, .school, .activity');
+      const entry = ev.target.closest('.rb-entry, .rb-section, .rb-company, .rb-school, .rb-activity');
       if (entry) {
-        entry.classList.toggle('do-not-export', !checked);
+        entry.classList.toggle('rb-do-not-export', !checked);
         entry.classList.toggle('hidden', !checked); // visual
       }
     });
@@ -81,23 +94,23 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
 
   // Insert an entry based on a clicked button and a template name
   function addEntry(button, templateName) {
-  const templateHtml = window.ResumeTemplates[templateName];
-  if (!templateHtml) return;
+    const templateHtml = window.ResumeTemplates[templateName];
+    if (!templateHtml) return;
 
-  // Find the section that contains the button (if any)
-  const section = button.closest('.section');
+    // Find the section that contains the button (if any)
+    const section = button.closest('.section');
 
-  // Look for a sensible insert target inside the section (prefer lists)
-  let insertTarget = null;
-  if (section) {
-    insertTarget = section.querySelector(
-      '.schools-list, .companies-list, .activities-list, .responsibilities, .skill-list, .sortable-list'
-    );
+    // Look for a sensible insert target inside the section (prefer lists)
+    let insertTarget = null;
+    if (section) {
+      insertTarget = section.querySelector(
+        '.rb-schools-list, .rb-companies-list, .rb-activities-list, .rb-responsibilities, .rb-skill-list, .rb-sortable-list'
+      );
   }
 
   // If no section or no inner list, default to #resume (always safe)
   if (!insertTarget) {
-    insertTarget = document.querySelector('#resume-content');
+    insertTarget = shadow.querySelector('#rb-resume-content');
   }
 
   // Parse template HTML into nodes
@@ -149,7 +162,8 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   // Sortable wiring; works when Sortable is present globally.
   function makeListsSortable(root) {
     // root can be document, element, or section
-    const lists = (root === document) ? $$('.sortable-list') : $$('.sortable-list', root);
+    // const lists = (root === document) ? $$('.rb-sortable-list') : $$('.rb-sortable-list', root);
+    const lists = $$('.rb-sortable-list', root === shadow ? shadow : root);
     if (!lists.length) return;
 
     lists.forEach(list => {
@@ -161,10 +175,14 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
       if (window.Sortable) {
         try {
           new Sortable(list, {
-            handle: '.handle',
+            handle: '.rb-handle',
             animation: 150,
             filter: '.fixed',
-            preventOnFilter: false
+            preventOnFilter: false,
+            // append the drag ghost inside the shadow host so it inherits styles
+            ghostClass: 'rb-sortable-ghost',
+            fallbackOnBody: false,
+            scroll: shadow  // if you need scroll support
           });
         } catch (e) {
           console.warn('Sortable init failed', e);
@@ -181,57 +199,53 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
         m.addedNodes.forEach(node => {
           if (!(node instanceof Element)) return;
           // If new node contains sortable-list(s), init them
-          if (node.querySelector && node.querySelector('.sortable-list')) {
+          if (node.querySelector && node.querySelector('.rb-sortable-list')) {
             makeListsSortable(node);
           }
           // also add controls for newly added .controls placeholders
-          if (node.querySelector && node.querySelector('.controls')) {
+          if (node.querySelector && node.querySelector('.rb-controls')) {
             addControlsToAll();
           }
         });
       });
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(shadow, { childList: true, subtree: true });
   }
 
   // Small utility to programmatically insert a main section (if you want)
-  window.addMainSection = function (sectionTemplateName, target = '#resume-content') {
+  window.addMainSection = function (sectionTemplateName, target = '#rb=resume-content') {
     const html = window.ResumeTemplates[sectionTemplateName];
     if (!html) return;
     const tpl = document.createElement('template');
     tpl.innerHTML = html.trim();
     const node = tpl.content.cloneNode(true);
-    document.querySelector(target).appendChild(node);
+    shadow.querySelector(target).appendChild(node);
     addControlsToAll();
-    makeListsSortable(document.querySelector(target));
+    makeListsSortable(shadow.querySelector(target));
   };
+
+  function buildDefaultResume() {
+    // only build if resume-content is empty
+    const content = shadow.querySelector('#rb-resume-content');
+    if (!content || content.children.length > 0) return;
+    // shadow.innerHTML = window.ResumeTemplates['resume-shell'];
+    addMainSection('education-section');
+    addEntry("school-entry")
+    addMainSection('work-section');
+    addMainSection('skills-section');
+    addMainSection('activities-section');
+  }
+
 
 })();
 
-
-
-// window.onload = function() {
-//   loadTemplateHTML();
-  
-//   var resume = document.getElementById('resume')
-//   setupElement(resume);
-//   // makeListsSortable(resume); //TODO we should add this into setup element somehow, it only wor
-
-//   setupLoadButton();
-// }// END WINDOW ONLOAD
 
 
 
 // if we want to change styles before we download the resume
 function loadNewStyles(){
     newStyle = document.getElementById("style-change").value;
-    document.getElementById("resume-style").setAttribute("href","resume-styles/"+newStyle+".css")
-}
-function loadTemplateHTML()
-{
-  const templateDiv = document.createElement("div"); 
-  templateDiv.innerHTML = templateHTML;
-  document.body.appendChild(templateDiv); 
+    shadow.querySelector("#rb-resume-style").setAttribute("href","css/resume-styles/"+newStyle+".css")
 }
 
 function setupLoadButton()
@@ -311,7 +325,7 @@ function addHideToggleEvent(element)
 {
   // add an event listener to change the style of objects based on whether 
   // or not they are excluded
-  element.querySelectorAll('.hide-toggle').forEach((checkbox) => {
+  element.querySelectorAll('.rb-hide-toggle').forEach((checkbox) => {
     checkbox.addEventListener('change', function () {
       if (this.checked) 
       {
@@ -330,9 +344,9 @@ function makeContentEditable(element)
   element.querySelectorAll('*').forEach((e) => {
     
     if(e.children.length == 0 
-      && !e.classList.contains("handle")
-      && !e.classList.contains("hide-toggle")
-      && !e.classList.contains("delete-sortable")
+      && !e.classList.contains("rb-handle")
+      && !e.classList.contains("rb-hide-toggle")
+      && !e.classList.contains("rb-delete-sortable")
       && e.tagName !== 'BUTTON')
     {
       e.setAttribute('contenteditable', 'true');
@@ -388,10 +402,12 @@ function makeListsSortable(element){
 }
 
 
+
 // export the html that will be used in our document
-function downloadResume(downloadNode){
-    const printSpace = document.getElementById("print-space");
-    let cleanedPrint = printSpace.cloneNode(true);
+function exportHTMLResume(downloadNode){
+  //changed this to rb-host
+    const resumeElement = shadow.querySelector("#rb-resume");
+    let cleanedPrint = resumeElement.cloneNode(true);
     
     //if the display checkboxes aren't checked we don't want to export them to the resume
     // they are in the controls so we need to check this before removing controls
@@ -410,22 +426,33 @@ function downloadResume(downloadNode){
     cleanedPrint.querySelectorAll("*").forEach((el) => {
       el.removeAttribute("style");
     });
+    cleanedPrint.querySelectorAll('[contenteditable]').forEach(el => 
+      el.removeAttribute('contenteditable')
+    );
 
 
-    blob = new Blob(
-      [cleanedPrint.innerHTML],
-      {type: "text/html"});
+    // Inline the CSS so the exported file is self-contained
+    const cssText = getCSSAsText(); // fetch your stylesheet text
+
+    const html = `<!DOCTYPE html>
+    <html><head><style>${cssText}</style></head>
+    <body>${cleanedPrint.outerHTML}</body></html>`;
+
+    blob = new Blob([html], {type: "text/html"});
     
     //triggers the download with default name
     a = document.createElement("a");
     const object_URL = URL.createObjectURL(blob);
     a.href = object_URL;
-    a.download = "test.html";
+    a.download = "resume.html";
     a.click();
 
     //Frees the memory
     URL.revokeObjectURL(object_URL);
 };
+
+
+
 // export the html that will be used in our document
 function saveBaseResume(){
   a = document.createElement("a");
@@ -439,6 +466,10 @@ function saveBaseResume(){
   URL.revokeObjectURL(object_URL);
 };
 
+async function getCSSAsText() {
+  const r = await fetch('css/resume-styles/vermillion.css');
+  return await r.text();
+}
 function confirmDelete(target){
   if (confirm("Are you sure you want to delete this item?")) 
   {
@@ -452,34 +483,3 @@ function dropDown(dropDown) {
 }
 
 
-
-function addItemToTarget(templateId, parentNode){
-    // Test to see if the browser supports the HTML template element by checking
-    // for the presence of the template element's content attribute.
-    if("content" in document.createElement("template"))
-    {
-      var template = document.querySelector(templateId);
-    
-      var clone = template.content.cloneNode(true);
-
-      console.log("adding a new section...".templateId);
-      setupElement(clone);
-
-      parentNode.append(clone);
-    }
-}
-
-function addListItems(element, templateId)
-{
-  // Test to see if the browser supports the HTML template element by checking
-  // for the presence of the template element's content attribute
-  if("content" in document.createElement("template"))
-  {
-    let temp = document.querySelector(templateId)
-    console.log("adding template of id "+templateId);
-
-    let clone = temp.content.cloneNode(true);
-    setupElement(clone);
-    element.parentElement.insertBefore(clone, element);
-  }
-}

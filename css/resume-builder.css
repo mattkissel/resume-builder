@@ -1,7 +1,7 @@
 
 /*_______________________________________________________________________*/
 /* Controls styling */
-.delete-sortable{
+.rb-delete-sortable{
   background: none;
   color: inherit;
   border: none;
@@ -10,40 +10,42 @@
   cursor: pointer;
   outline: inherit;
 }
-.controls{
+.rb-controls{
   /* margin-right:rem; */
 }
 
 /*________________________________________________________________________*/
 /*Sortable styling*/
-.controls{
+.rb-controls{
   float: right;
   font-size:medium;
   display:inline-block;
 }
-.handle{
+.rb-handle{
   cursor:grab;
   /* margin-left: 2em; */
 }
-.sortable-list > *:not(.section-header):not(.controls){
+.rb-sortable-list > *:not(.rb-section-header):not(.rb-controls){
   border:2px solid rgb(114, 114, 114);
   border-radius: 5px;
   padding:2px;
 } 
-/* .sortable-list > :is(div, li):not(.section-header):not(.controls) {
+/* .rb-sortable-list > :is(div, li):not(.rb-section-header):not(.rb-controls) {
   border: 2px solid rgb(114, 114, 114);
   border-radius: 5px;
   padding: 2px;
 } */
+.rb-sortable-ghost {
+  opacity: 0.4;
+}
 
-
-.do-not-export{
+.rb-do-not-export{
   opacity: 50%;
 }
 /*_______________________________________________________________________________________________*/
 /* DROPDOWN CSS */
 /* Dropdown Button */
-.dropbtn {
+.rb-dropbtn {
     background-color: rgb(211, 110, 84);
     color: white;
     padding: 5px 10px ;
@@ -55,19 +57,19 @@ button{
   cursor: pointer;
 }
 /* Dropdown button on hover & focus */
-.dropbtn:hover, .dropbtn:focus {
+.rb-dropbtn:hover, .rb-dropbtn:focus {
   background-color: rgb(165, 74, 52);;
 }
   
 /* The container <div> - needed to position the dropdown content */
-.dropdown {
+.rb-dropdown {
   position: relative;
   display: inline-block;
   float: right;
 }
   
 /* Dropdown Content (Hidden by Default) */
-.dropdown-content {
+.rb-dropdown-content {
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -77,7 +79,7 @@ button{
 }
   
 /* Links inside the dropdown */
-.dropdown-content a {
+.rb-dropdown-content a {
   color: black;
   padding: 12px 16px;
   text-decoration: none;
@@ -85,108 +87,108 @@ button{
 }
   
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {
+.rb-dropdown-content a:hover {
   background-color: #ddd;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {
+/* Show the dropdown menu (use JS to add this class to the .rb-dropdown-content container when the user clicks on the dropdown button) */
+.rb-show {
   display:block;
 }
 
 
 /* styles for the button section below the resume */
-#file-input{
+#rb-file-input{
   display:none;
 }
 
 /*_______________________________________________________________________________________________*/
 /* DEFAULT TEXT FOR ALL DIVS */
-.ui-sortable>li:empty:after{
+.rb-ui-sortable>li:empty:after{
   content:'<span class="handle">&#8645;</span>';
   color: rgb(179, 15, 15);
 }
 
-#email:empty:before{
+#rb-email:empty:before{
   content:"youremail@domain.com";
   color: rgb(172, 172, 172);
 }
-#name:empty:before{
+#rb-name:empty:before{
   content:"FirstName Lastname";
   color: rgb(172, 172, 172);
 }
-#phone-number:empty:before{
+#rb-phone-number:empty:before{
   content:"###-####-####";
   color: rgb(172, 172, 172);
 }
-#website:empty:before{
+#rb-website:empty:before{
   content:"https://www.fakesite.com/";
   color: rgb(172, 172, 172);
 }
-.section-header:empty:before{
+.rb-section-header:empty:before{
   content:"Section, eg. Education, Work Experience, Skills, Activities";
   color: rgb(172, 172, 172);
 }
-.school-name:empty:before{
+.rb-school-name:empty:before{
   content:"School Name";
   color: rgb(172, 172, 172);
 }
-.location:empty:before{
+.rb-location:empty:before{
   content:"City, State, Country";
   color: rgb(172, 172, 172);
 }
-.major:empty:before{
+.rb-major:empty:before{
   content:"BS in Major";
   color: rgb(172, 172, 172);
 }
-.date:empty:before{
+.rb-date:empty:before{
   content:"10/2000 - 10/2000";
   color: rgb(172, 172, 172);
 }
-.gpa:empty:before{
+.rb-gpa:empty:before{
   content:"GPA:0.0/0.0";
   color: rgb(172, 172, 172);
 }
-.minor:empty:before{
+.rb-minor:empty:before{
   content:"Minor: Your College Minor";
   color: rgb(172, 172, 172);
 }
 /* maybe separate out descriptions for jobs, activities and educaiton */
-.description:empty:before{
+.rb-description:empty:before{
   content:"Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study";
   color: rgb(172, 172, 172);
 }
-.job-title:empty:before{
+.rb-job-title:empty:before{
   content:"Your Job Title Here";
   color: rgb(172, 172, 172);
 }
-.company-name:empty:before{
+.rb-company-name:empty:before{
   content:"Company Name Here";
   color: rgb(172, 172, 172);
 }
-.responsibilities>li:empty:before{
+.rb-responsibilities>li:empty:before{
   content:"Responsibilites list them here";
   color: rgb(172, 172, 172);
 }
-.skill-list>li:empty:before{
+.rb-skill-list>li:empty:before{
   content:"List some of your skills or certs";
   color: rgb(172, 172, 172);
 }
-.skill-list .title:empty:before{
+.rb-skill-list .rb-title:empty:before{
   content:"Type of Skills/certs, e.g. Language Skills, Computer Skills,etc ";
   color: rgb(172, 172, 172);
 }
-.activity .title:empty:before{
+.rb-activity .rb-title:empty:before{
   content:"Title of your Activity";
   color: rgb(172, 172, 172);
 }
 
 
 
-#sortable-list {
+#rb-sortable-list {
 }
 
-.sortable-item {
+.rb-sortable-item {
   cursor: move;
 
 }

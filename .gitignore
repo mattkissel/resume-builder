@@ -1,5 +1,6 @@
 exported-resumes/*
 resume.html
+resume-builder.zip
 
 # exception to the rule
 !exported-resumes/README.md

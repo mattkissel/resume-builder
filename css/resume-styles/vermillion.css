@@ -1,6 +1,6 @@
 @font-face {
     font-family: "OpenSans";
-    src: url("../fonts/OpenSans-Regular.ttf");
+    src: url("../../fonts/OpenSans-Regular.ttf");
 }
 body{
     width:800px;
@@ -13,10 +13,10 @@ body{
 }
 
 /*This is resume-building breaking*/
-#printable-resume{
+#rb-printable-resume{
     
 }
-#resume{
+#rb-resume{
     display: flex;
     align-items: stretch;
     flex-direction: row;
@@ -28,25 +28,25 @@ ul{
 li{
     margin-top: 0.2rem;
 }
-#contact-info{
+#rb-contact-info{
     flex: 1;
     margin-right: 10pt;
     margin-left: 10pt;
     font-weight: bold;
 }
-#name{
+#rb-name{
     font-size:30pt;
     color:#ac3125;
 }
-#resume-content{
+#rb-resume-content{
     /* going to consider changing this to a dynamic div when we use jQuery */
     flex: 10;
     margin-right: 10pt;
 }
-.section{
+.rb-section{
     margin-top:10pt;
 }
-.section-header{
+.rb-section-header{
     color:#ac3125;
     font-size: larger;
     font-weight: bold;
@@ -54,55 +54,55 @@ li{
     text-transform: uppercase;
 }
 
-.school-name,.job-title{
+.rb-school-name,.rb-job-title{
     font-weight: bold;
     font-size:larger;
     /* flex-basis:70%; */
     text-decoration:underline;
 }
-.list-title,.activity-title,.title{
+.rb-list-title,.rb-activity-title,.rb-title{
     font-weight:bold;
     text-decoration:underline;
 }
-.company-name{
+.rb-company-name{
     flex-basis:70%;
 }
-.company,.activity{
+.rb-company,.rb-activity{
     margin-bottom:10pt;
 }
-.job-dates{
+.rb-job-dates{
     flex-basis:20%;
 }
-.essentials,.skill-lists{
+.rb-essentials,.rb-skill-lists{
     flex-wrap: wrap; 
     display: flex;
     align-items: stretch;
     flex-grow: 1;
 }
-ul>.bold,.company-name,.major{
+ul>.rb-bold,.rb-company-name,.rb-major{
     font-weight: bold;
 }
-/* .essentials .title{
+/* .rb-essentials .rb-title{
     flex-basis:80%;
     
 } */
-.essentials>div:nth-child(odd){
+.rb-essentials>div:nth-child(odd){
     flex-basis:70%;
 }
-.essentials>div:nth-child(even){
+.rb-essentials>div:nth-child(even){
     flex-basis:30%;
 }
 
 
-.hide{
+.rb-hide{
     display: none;
 }
-.skill-lists>ul{
+.rb-skill-lists>ul{
     /* not sure why it needs to be less than 50, it has no margins */
     flex-basis:42%;
 }
 
-.school-location,.date,.location{
+.rb-school-location,.rb-date,.rb-location{
     text-align: right;
     font-weight: bold;
     /* flex-grow: 1; */

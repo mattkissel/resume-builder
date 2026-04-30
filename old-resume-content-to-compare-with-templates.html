@@ -1,0 +1,110 @@
+<div id="rb-resume">
+    <!-- we might want to move this to the head then, dynamically add it to print in resume-builder.js -->
+    <link rel="stylesheet" type="text/css" id="resume-style" href="css/resume-styles/vermillion.css" />
+    <div id="rb-contact-info" >
+        <div id="rb-name"></div>
+        <div id="rb-phone-number"></div>
+        <div id="rb-email" placeholder="fuckin email eh"></div>
+        <div id="rb-website"></div>
+    </div>
+
+    <!-- could consider renaming this since contact info is sort of content -->
+    <div id="rb-resume-content" class="rb-sortable-list">
+
+    <div class="rb-section" id="rb-education">
+        <span class="rb-controls"></span>
+        <div class="rb-section-header rb-fixed" >Education</div>
+        <div class="rb-schools-list rb-sortable-list">
+        <div class="rb-school">
+            <span class="rb-controls"></span>
+            <div class="rb-essentials">
+                <div class="rb-school-name"></div>
+                <div class="rb-location"></div>
+                <div class="rb-major"></div>
+                <div class="rb-date"></div>
+            </div>
+            <div class="rb-minor"></div>
+            <div class="rb-gpa"></div>
+            <div class="rb-description"></div>
+        </div>
+        <button type="button" onclick="addListItems(this, '#rb-school-template')">+</button>
+    </div>
+    </div>
+
+    <div class="rb-section" id="rb-work-experience">
+        <span class="rb-controls"></span>
+        <div class="rb-section-header">Work Experience</div>
+        <div class="rb-companies-list rb-sortable-list">
+        <div class="rb-company">
+            <span class="rb-controls"></span>
+            <div class="rb-essentials">
+                <div class="rb-job-title rb-title"></div>
+                <div class="rb-job-dates rb-date"></div>
+                <div class="rb-company-name"></div>
+                <div class="rb-location"></div>
+            </div>
+            <div class="rb-description">Here's a description of what my general responsibilities were.</div>
+            <ul class="rb-sortable-list rb-responsibilities">
+                <li><span>Important Project 1</span><span class="rb-controls"></span></li>
+                <li><span>Other Project 2</span><span class="rb-controls"></span></li>
+                <li><span>Other Project 3</span><span class="rb-controls"></span></li>
+                <li><span>Other Project 4</span><span class="rb-controls"></span></li>
+                <li><span>Other Project 5</span><span class="rb-controls"></span></li>
+                <button type="button" onclick="addListItems(this, 'rb-#job-list-item-template')">+</button>
+            </ul>
+        </div>
+        <button type="button" onclick="addListItems(this, 'rb-#job-template')">+</button>
+        </div>
+    </div>
+
+    <div class="rb-section" id="rb-skills">
+        <span class="rb-controls"></span>
+        <div class="rb-section-header">Skills</div>
+        <div class="rb-skill-lists rb-sortable-list">
+            <ul class="rb-skill-list rb-sortable-list">
+                <span class="rb-controls"></span>
+                <div class="rb-bold rb-title rb-fixed">Computer Skills</div>
+                <li><span>HTML/CSS and Javascript</span><span class="rb-controls"></span></li>
+                <li><span>PHP and MySQL</span><span class="rb-controls"></span></li>
+                <li><span>C# and XNA</span><span class="rb-controls"></span></li>
+                <li><span>Bash</span><span class="rb-controls"></span></li>
+                <button type="button" onclick="addListItems(this, '#rb-skill-list-item-template')">+</button>
+            </ul>
+            <ul class="skill-list sortable-list">
+                <span class="controls"></span>
+                    <div class="bold title fixed">Language Skills</div>
+                    <li><span>Russian - Beginner</span><span class="rb-controls"></span></li>
+                    <li><span>English - Native</span><span class="rb-controls"></span></li>
+                    <li><span>Spanish - Intermediate</span><span class="rb-controls"></span></li>
+                    <button type="button" onclick="addListItems(this, '#rb-skill-list-item-template')">+</button>
+            </ul>
+            <button type="button" onclick="addListItems(this, '#rb-skill-list-template')">+</button>
+        </div>
+    </div>
+  
+   
+    <div class="rb-section" id="rb-activites">
+        <span class="rb-controls"></span>
+        <div class="rb-section-header">Activities</div>
+        <div class="rb-activities-list rb-sortable-list">
+            <div class="rb-activity">
+                <span class="rb-controls"></span>
+                <div class="rb-essentials" >
+                    <div class="rb-activity-title title">Fan of being a Fan Club</div>
+                    <div class="rb-date">3/2004-3/2012</div>
+                    <div class="rb-company-name"><!-- Probably want to change this in the future --></div>
+                    <div class="rb-location"></div> 
+                </div>
+                <div class="rb-description">It is a long established fact that a reader will be distracted by the readable content of a page 
+                    when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal 
+                    distribution of letters, as opposed to using 'Content here, content here', making it look like 
+                    readable English.
+                </div>
+            </div>
+            <button type="button" onclick="addListItems(this, '#rb-activity-template')">+</button>
+        </div>
+    </div>
+
+            
+    </div><!-- Resume Content -->
+</div><!-- Resume -->
