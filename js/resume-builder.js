@@ -24,6 +24,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     setupGlobalClickHandlers();
     observeAddsForSortables();
     fullyClearContentEditables();
+    setupToolbarHandlers();
   });
   // helper
   const $ = (sel, root = shadow) => root.querySelector(sel);
@@ -256,17 +257,26 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     addEntry('activity-entry', activitiesList);
   }
 
-
+  // if we want to change styles before we download the resume
+  function loadNewStyles(){
+      newStyle = document.getElementById("rb-style-change").value;
+      console.log("new style: " + newStyle);
+      shadow.querySelector("#rb-resume-style").setAttribute("href","css/resume-styles/"+newStyle+".css")
+  }
+  function setupToolbarHandlers()
+  {
+    document.getElementById('rb-style-change').addEventListener('change', () => {
+    const val = document.getElementById('rb-style-change').value;
+      shadow.querySelector('#rb-resume-style')
+        .setAttribute('href', 'css/resume-styles/' + val + '.css');
+    });
+  }
 })();
 
 
 
 
-// if we want to change styles before we download the resume
-function loadNewStyles(){
-    newStyle = document.getElementById("style-change").value;
-    shadow.querySelector("#rb-resume-style").setAttribute("href","css/resume-styles/"+newStyle+".css")
-}
+
 
 function setupLoadButton()
 {
