@@ -1,3 +1,6 @@
+:root{
+  --placeholder-color:#aaa;
+}
 
 /*_______________________________________________________________________*/
 /* Controls styling */
@@ -14,6 +17,9 @@
   /* margin-right:rem; */
 }
 
+/* li{
+  list-style-type: none;
+} */
 /*________________________________________________________________________*/
 /*Sortable styling*/
 .rb-controls{
@@ -113,57 +119,19 @@ button{
   content:"youremail@domain.com";
   color: rgb(172, 172, 172);
 }
-#rb-name:empty:before{
-  content:"FirstName Lastname";
-  color: rgb(172, 172, 172);
-}
-#rb-phone-number:empty:before{
-  content:"###-####-####";
-  color: rgb(172, 172, 172);
-}
 #rb-website:empty:before{
   content:"https://www.fakesite.com/";
   color: rgb(172, 172, 172);
 }
+[contenteditable]:empty::before {
+  content: attr(data-placeholder);
+  color: var(--placeholder-color);
+  font-style: italic;
+  pointer-events: none; /* Allows clicking through the text to focus the div */
+}
+
 .rb-section-header:empty:before{
   content:"Section, eg. Education, Work Experience, Skills, Activities";
-  color: rgb(172, 172, 172);
-}
-.rb-school-name:empty:before{
-  content:"School Name";
-  color: rgb(172, 172, 172);
-}
-.rb-location:empty:before{
-  content:"City, State, Country";
-  color: rgb(172, 172, 172);
-}
-.rb-major:empty:before{
-  content:"BS in Major";
-  color: rgb(172, 172, 172);
-}
-.rb-date:empty:before{
-  content:"10/2000 - 10/2000";
-  color: rgb(172, 172, 172);
-}
-.rb-gpa:empty:before{
-  content:"GPA:0.0/0.0";
-  color: rgb(172, 172, 172);
-}
-.rb-minor:empty:before{
-  content:"Minor: Your College Minor";
-  color: rgb(172, 172, 172);
-}
-/* maybe separate out descriptions for jobs, activities and educaiton */
-.rb-description:empty:before{
-  content:"Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study";
-  color: rgb(172, 172, 172);
-}
-.rb-job-title:empty:before{
-  content:"Your Job Title Here";
-  color: rgb(172, 172, 172);
-}
-.rb-company-name:empty:before{
-  content:"Company Name Here";
   color: rgb(172, 172, 172);
 }
 .rb-responsibilities>li:empty:before{
@@ -176,10 +144,6 @@ button{
 }
 .rb-skill-list .rb-title:empty:before{
   content:"Type of Skills/certs, e.g. Language Skills, Computer Skills,etc ";
-  color: rgb(172, 172, 172);
-}
-.rb-activity .rb-title:empty:before{
-  content:"Title of your Activity";
   color: rgb(172, 172, 172);
 }
 

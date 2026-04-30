@@ -13,10 +13,10 @@ window.ResumeTemplates = {
   </style>
   <div id="rb-resume">
     <div id="rb-contact-info">
-      <div id="rb-name">Boberino</div>
-      <div id="rb-phone-number"></div>
-      <div id="rb-email">Boberino</div>
-      <div id="rb-website"></div>
+      <div id="rb-name" data-placeholder="FirstName Lastname" contenteditable="true" ></div>
+      <div id="rb-phone-number" data-placeholder="###-####-####" contenteditable="true" ></div>
+      <div id="rb-email" data-placeholder="youremail@domain.com" contenteditable="true" ></div>
+      <div id="rb-website" data-placeholder="https://www.fakesite.com/" contenteditable="true" ></div>
     </div>
     <!-- could consider renaming this since contact info is sort of content -->
     <div id="rb-resume-content" class="rb-sortable-list">
@@ -80,14 +80,16 @@ window.ResumeTemplates = {
 <div class="rb-school rb-entry">
   <div class="rb-controls"></div>
   <div class="rb-essentials">
-    <div class="rb-school-name" contenteditable="true">University Name</div>
-    <div class="rb-location" contenteditable="true">City, Country</div>
-    <div class="rb-major" contenteditable="true">Major / Program</div>
-    <div class="rb-date" contenteditable="true">Year - Year</div>
+    <div class="rb-school-name" data-placeholder="University/School Name"contenteditable="true"></div>
+    <div class="rb-location" data-placeholder="City, State, Country" contenteditable="true"></div>
+    <div class="rb-major" data-placeholder="BS in Major/Program" contenteditable="true"></div>
+    <div class="rb-date" data-placeholder="2000 - 2050" contenteditable="true"></div>
   </div>
-  <div class="rb-minor" contenteditable="true">Minor / certificate</div>
-  <div class="rb-gpa" contenteditable="true">GPA: </div>
-  <div class="rb-description" contenteditable="true">Short description</div>
+  <div class="rb-minor" data-placeholder="Minor: Your College Minor or some certificate" contenteditable="true"></div>
+  <div class="rb-gpa" data-placeholder="GPA:0.0/0.0" contenteditable="true"></div>
+  <div class="rb-description" 
+  data-placeholder="Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study" 
+  contenteditable="true"></div>
   <div class="rb-entry-actions">
     <button type="button" data-action="remove-entry">Remove</button>
   </div>
@@ -98,33 +100,39 @@ window.ResumeTemplates = {
 <div class="rb-company rb-entry">
   <div class="rb-controls"></div>
   <div class="rb-essentials">
-    <div class="rb-job-title rb-title" contenteditable="true">Job Title</div>
-    <div class="rb-job-dates rb-date" contenteditable="true">Dates</div>
-    <div class="rb-company-name" contenteditable="true">Company</div>
-    <div class="rb-location" contenteditable="true">Location</div>
+    <div class="rb-job-title rb-title" data-placeholder="Your Job Title Here" contenteditable="true"></div>
+    <div class="rb-job-dates rb-date" data-placeholder="10/2000 - 10/2000" contenteditable="true"></div>
+    <div class="rb-company-name" data-placeholder="Company Name Here" contenteditable="true" ></div>
+    <div class="rb-location" data-placeholder="City, State, Country" contenteditable="true"></div>
   </div>
-  <div class="rb-description" contenteditable="true">Short summary</div>
+  <div class="rb-description" data-placeholder="Optional short description" contenteditable="true"></div>
 
   <ul class="rb-responsibilities rb-sortable-list">
     <!-- responsibilities inserted here -->
   </ul>
 
   <div class="rb-entry-actions">
-    <button type="button" data-action="add-entry" data-template="responsibility-item">Add Responsibility</button>
+    <button type="button" 
+    data-action="add-entry" 
+    data-template="responsibility-item" 
+    data-target=".rb-responsibilities">
+      Add Responsibility 
+    </button>
     <button type="button" data-action="remove-entry">Remove Job</button>
   </div>
 </div>
 `,
 
   "responsibility-item": `
-<li class="rb-responsibility-item"><span contenteditable="true">Responsibility or achievement</span>
-  <button type="button" data-action="remove-entry">✖</button>
+<li class="rb-responsibility-item">
+  <span contenteditable="true">Responsibility or achievement</span>
+  <span class="rb-controls"></span>
 </li>
 `,
 
   "skill-item": `
-<li class="rb-skill-item"><span contenteditable="true">New Skill</span>
-  <button type="button" data-action="remove-entry">✖</button>
+<li class="rb-skill-item"><span contenteditable="true" data-placeholder="New Skill"></span>
+  <span class="rb-controls"></span>
 </li>
 `,
 
@@ -132,12 +140,12 @@ window.ResumeTemplates = {
 <div class="rb-activity rb-entry">
   <div class="rb-controls"></div>
   <div class="rb-essentials">
-    <div class="rb-activity-title rb-title" contenteditable="true">Activity Title</div>
-    <div class="rb-date" contenteditable="true">Dates</div>
-    <div class="rb-company-name" contenteditable="true">Organization</div>
-    <div class="rb-location" contenteditable="true">Location</div>
+    <div class="rb-activity-title rb-title" contenteditable="true" data-placeholder="Title of your Activity"></div>
+    <div class="rb-date" data-placeholder="10/2000 - 10/2000" contenteditable="true"></div>
+    <div class="rb-company-name" data-placeholder="Organization Name" contenteditable="true"></div>
+    <div class="rb-location" data-placeholder="City, State, Country" contenteditable="true"></div>
   </div>
-  <div class="rb-description" contenteditable="true">Short details</div>
+  <div class="rb-description" data-placeholder="Short summary" contenteditable="true"></div>
   <div class="rb-entry-actions">
     <button type="button" data-action="remove-entry">Remove</button>
   </div>

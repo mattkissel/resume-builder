@@ -23,6 +23,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     initFromExisting();
     setupGlobalClickHandlers();
     observeAddsForSortables();
+    fullyClearContentEditables();
   });
   // helper
   const $ = (sel, root = shadow) => root.querySelector(sel);
@@ -40,6 +41,16 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     // For compatibility with your existing HTML, don't overwrite. Just wire up sortables.
     makeListsSortable(shadow);
     addControlsToAll();
+  }
+  function fullyClearContentEditables(){
+    shadow.addEventListener('input', (e) => {
+      const target = e.target;
+      
+      // If the user deleted everything or it's just whitespace/breaks
+      if (target.hasAttribute('contenteditable') && target.innerText.trim() === "") {
+        target.innerHTML = ""; // Force it to be truly empty so :empty triggers
+      }
+    });
   }
 
   function addControlsToAll() {
@@ -69,7 +80,22 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
           console.warn('Template not found:', templateName);
           return;
         }
-        addEntry(btn, templateName);
+
+        let insertTarget = null
+        if (btn.dataset.target)
+        {
+          const scope = btn.closest(".rb-entry, rb-section");
+          insertTarget = scope ? scope.querySelector(btn.dataset.target) : null;
+        }
+        if(!insertTarget)
+        {
+          //find the nearest list to insert into
+          const section = btn.closest('.rb-section');
+          insertTarget = section
+            ? section.querySelector(".rb-sortable-list")
+            : shadow.querySelector("#rb-resume-content");
+        }
+        addEntry(templateName, insertTarget);
       } else if (action === 'remove-entry') {
         removeEntry(ev.target);
       } else {
@@ -93,56 +119,32 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   }
 
   // Insert an entry based on a clicked button and a template name
-  function addEntry(button, templateName) {
+  function addEntry(templateName, insertTarget) {
     const templateHtml = window.ResumeTemplates[templateName];
     if (!templateHtml) return;
 
-    // Find the section that contains the button (if any)
-    const section = button.closest('.section');
+    const tpl = document.createElement('template');
+    tpl.innerHTML = templateHtml.trim();
+    const newNodes = tpl.content.cloneNode(true);
 
-    // Look for a sensible insert target inside the section (prefer lists)
-    let insertTarget = null;
-    if (section) {
-      insertTarget = section.querySelector(
-        '.rb-schools-list, .rb-companies-list, .rb-activities-list, .rb-responsibilities, .rb-skill-list, .rb-sortable-list'
-      );
-  }
-
-  // If no section or no inner list, default to #resume (always safe)
-  if (!insertTarget) {
-    insertTarget = shadow.querySelector('#rb-resume-content');
-  }
-
-  // Parse template HTML into nodes
-  const tpl = document.createElement('template');
-  tpl.innerHTML = templateHtml.trim();
-  const newNodes = tpl.content.cloneNode(true);
-
-  // If insert target is a UL/OL, append list items, otherwise append or insertBefore
-  if (insertTarget.tagName && /^(UL|OL)$/i.test(insertTarget.tagName)) {
-    // If template root is li, append directly; otherwise wrap children in li
-    const first = newNodes.firstElementChild;
-    if (first && first.tagName.toLowerCase() === 'li') {
-      insertTarget.appendChild(newNodes);
-    } else {
-      const wrapper = document.createElement('li');
-      // move children into wrapper
-      while (tpl.content.firstChild) {
-        wrapper.appendChild(tpl.content.firstChild);
+    // If insert target is a UL/OL, append list items, otherwise append or insertBefore
+    if (/^(UL|OL)$/i.test(insertTarget.tagName)) {
+      const first = tpl.content.firstElementChild;
+      // If template root is li, append directly; otherwise wrap children in li
+      if(first && first.tagName.toLowerCase() ==='li'){
+        insertTarget.appendChild(newNodes)
+      } else {
+        const wrapper = document.createElement('li');
+        // move children into wrapper
+        while (tpl.content.firstChild) wrapper.appendChild(tpl.content.firstChild);
+        insertTarget.appendChild(wrapper);
       }
-      insertTarget.appendChild(wrapper);
-    }
-  } else {
-    // Append before the button if the button is inside the insertTarget, otherwise append to insertTarget
-    if (insertTarget.contains(button)) {
-      insertTarget.insertBefore(newNodes, button);
-    } else {
+    }else {
       insertTarget.appendChild(newNodes);
     }
-  }
 
   // Post-insert initialisation
-  makeListsSortable(insertTarget);
+  makeListsSortable();
   addControlsToAll();
 }
 
@@ -155,7 +157,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
       li.remove();
       return;
     }
-    const entry = target.closest('.entry, .company, .school, .activity, .section');
+    const entry = target.closest('.rb-entry, .rb-company, .rb-school, .rb-activity, .rb-section');
     if (entry) entry.remove();
   }
 
@@ -196,14 +198,21 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     const observer = new MutationObserver(mutations => {
       mutations.forEach(m => {
         if (!m.addedNodes || !m.addedNodes.length) return;
+       
         m.addedNodes.forEach(node => {
           if (!(node instanceof Element)) return;
+
+          // if the node itself is a sortable list
+          if (node.classList.contains('rb-sortable-list')) {
+            makeListsSortable(node.parentElement);
+          }
+
           // If new node contains sortable-list(s), init them
-          if (node.querySelector && node.querySelector('.rb-sortable-list')) {
+          if (node.querySelector('.rb-sortable-list')) {
             makeListsSortable(node);
           }
           // also add controls for newly added .controls placeholders
-          if (node.querySelector && node.querySelector('.rb-controls')) {
+          if (node.querySelector('.rb-controls')) {
             addControlsToAll();
           }
         });
@@ -213,7 +222,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   }
 
   // Small utility to programmatically insert a main section (if you want)
-  window.addMainSection = function (sectionTemplateName, target = '#rb=resume-content') {
+  window.addMainSection = function (sectionTemplateName, target = '#rb-resume-content') {
     const html = window.ResumeTemplates[sectionTemplateName];
     if (!html) return;
     const tpl = document.createElement('template');
@@ -229,11 +238,22 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     const content = shadow.querySelector('#rb-resume-content');
     if (!content || content.children.length > 0) return;
     // shadow.innerHTML = window.ResumeTemplates['resume-shell'];
+
     addMainSection('education-section');
-    addEntry("school-entry")
+    const schoolsList = shadow.querySelector('.rb-schools-list');
+    addEntry('school-entry', schoolsList);
+
     addMainSection('work-section');
+    const companiesList = shadow.querySelector('.rb-companies-list');
+    addEntry('job-entry', companiesList);
+
     addMainSection('skills-section');
+    const skillList = shadow.querySelector('.rb-skill-list');
+    addEntry('skill-item', skillList);
+
     addMainSection('activities-section');
+    const activitiesList = shadow.querySelector('.rb-activities-list');
+    addEntry('activity-entry', activitiesList);
   }
 
 
@@ -296,111 +316,6 @@ function setupLoadButton()
   });
   
 }
-function setupElement(element)
-{
-  addSortableControls(element);
-  makeContentEditable(element);
-  addHideToggleEvent(element);
-  makeListsSortable(element);
-}
-
-// we have to add sortable for items we will need to call it again if we add more content
-function addSortableControls(element)
-{
-  var controls = element.querySelectorAll(".controls");
-  
-  var controlTemplate = document.querySelector("#controls-template");
-
-  controls.forEach((control) => {
-    if(control.children.length > 0)
-    {
-      return;
-    }
-    var clone = controlTemplate.content.cloneNode(true);
-    control.append(clone);
-  });
-
-}
-function addHideToggleEvent(element)
-{
-  // add an event listener to change the style of objects based on whether 
-  // or not they are excluded
-  element.querySelectorAll('.rb-hide-toggle').forEach((checkbox) => {
-    checkbox.addEventListener('change', function () {
-      if (this.checked) 
-      {
-        this.parentElement.parentElement.classList.remove('do-not-export'); // Remove the hide class if checked
-      } 
-      else 
-      {
-        this.parentElement.parentElement.classList.add('do-not-export'); // Add the hide class if unchecked
-      }
-    });
-  });
-}
-function makeContentEditable(element)
-{
-  // Make content editable
-  element.querySelectorAll('*').forEach((e) => {
-    
-    if(e.children.length == 0 
-      && !e.classList.contains("rb-handle")
-      && !e.classList.contains("rb-hide-toggle")
-      && !e.classList.contains("rb-delete-sortable")
-      && e.tagName !== 'BUTTON')
-    {
-      e.setAttribute('contenteditable', 'true');
-    }
-  });
-}
-function makeListsSortable(element){
-  console.log("calling make sortable with " + element);
-  let sortableLists = null;
-  if(element instanceof DocumentFragment)
-  {
-    //if it's a fragment we are setting up from a template and we need to search till we find a possible list
-    const childElements = element.querySelectorAll('*'); 
-  
-    // Find the first element with class 'sortable-list'
-    for (let child of childElements) 
-    {
-      if (child.classList.contains('sortable-list')) 
-        {
-        //we put in in [] to make an HTMLCollection so that the later for loop will process correctly
-        sortableLists = [child];
-        break;
-      }
-    }
-    
-    if (!sortableLists) 
-      {
-      console.log("No sortable list found in the fragment");
-    }
-  }
-  else
-  {
-    console.log("get elemen");
-    sortableLists = element.getElementsByClassName('sortable-list');
-  }
-
-  
-  if(sortableLists)
-  {
-    console.log("attempting loop");
-    Array.from(sortableLists).forEach((sortableList) => {
-      // var sortable = SortableMin.create(sortableList,{});
-      new Sortable(sortableList,
-        {
-          filter: '.fixed', // Define a selector for fixed items
-          preventOnFilter: false, // Allow clicks and interaction but no drag
-          handle:'.handle',
-          animation: 150
-        }
-      );
-    });
-  }
-}
-
 
 
 // export the html that will be used in our document
