@@ -155,7 +155,8 @@ a:hover {
 
 /* Red accent tick before each section header */
 .rb-section-header::before {
-    content: '▸ ';
+    /* content: '▸ ';*/
+    content: '\\25B8 ';
     color: var(--accent);
 }
 

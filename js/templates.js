@@ -25,6 +25,16 @@ window.ResumeTemplates = {
   </div>
   `,
   // SECTION TEMPLATES (one of each)
+  "summary-section": `
+<section class="rb-section rb-summary" data-type="summary">
+  <div class="rb-controls"></div>
+  <h2 class="rb-section-header">Professional Summary</h2>
+  <div class="rb-description" 
+  data-placeholder="E.g. Experienced Dungeon Master with over fifteen years of professional experience seeks to leverage top-notch dice-rolling and dungeon planning skills to boost efficiency at Dungeoneering Corp. Managed a unkempt, unbathed team of four players in a high-volume, low-rolling environment. Grew the number of player deaths by 32% a year, and reduced planning time by 75%. Willing to relocate if rulebooks are provided." 
+  contenteditable="true"></div>
+</section>
+`,
+
   "education-section": `
 <section class="rb-section rb-education" data-type="education">
   <div class="rb-controls"></div>

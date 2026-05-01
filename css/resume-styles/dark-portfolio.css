@@ -144,8 +144,12 @@ a:hover {
 }
 
 /* Red accent tick before each section header */
+/* small : &#x25B8; */
+/* Standard Right Triangle  &#x25B6;*/
+/* Right Pointer &#x25BA; */
 .rb-section-header::before {
-    content: '▸ ';
+    /* content: '▸ '; */
+    content: '\25B8 ';
     color: var(--accent);
 }
 

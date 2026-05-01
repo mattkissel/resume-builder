@@ -15,31 +15,32 @@
 
 </div><!-- rb-host -->
 
-<div><!-- Begin section of buttons for saving etc. -->
-    <a href="#" id="rb-export-resume">Export Resume</a>
-    <a href="#" id="rb-resume-save-all">Save Master Resume</a>
-    <button id="rb-load-button">Load File</button>
-    <input type="file" id="rb-file-input" accept=".html" >
+<div id="rb-toolbox"><!-- Begin section of buttons for saving etc. -->
+  <fieldset id="rb-file-controls">
+    <legend>File Functions</legend>
+    <div class="rb-flex-wrap">
+    <!-- download arrow &#x2913; or down arrow  &#x2B07; -->
+    <a href="#" id="rb-export-resume" class="rb-save-load-btn"><span class="rb-download-arrow">&#x2913;</span> Export Resume </a>
+    <a href="#" id="rb-resume-save-all" class="rb-save-load-btn"><span class="rb-download-arrow">&#x2913;</span> Save Master Resume</a>
+    <button id="rb-load-button" class="rb-save-load-btn">Load File</button>
+    <input type="file" id="rb-file-input" accept=".html">
     <label for="rb-style-change">
         Change the Resume Style:
         <select id="rb-style-change"></select>
     </label>
-    <button onclick="loadNewStyles()">Reload Styles</button>
-    <div id="rb-section-controls">
-  <button type="button" onclick="addMainSection('rb-education-section')">+ Education Section</button>
-  <button type="button" onclick="addMainSection('rb-work-section')">+ Work Section</button>
-  <button type="button" onclick="addMainSection('rb-skills-section')">+ Skills Section</button>
-</div>
-    <!-- <div class="dropdown">
-        <button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>
-        <div id="myDropdown" class="dropdown-content">
-            <a href="#" onclick="addItem('education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a>
-            <a href="#" onclick="addItemToTarget('#education-template', document.getElementById('resume-content'))" class="add-section">Add New Education Section</a>
-            <a href="#" onclick="addItemToTarget('#activities-template', document.getElementById('resume-content'))" class="add-section">Add Activity Section</a>
-            <a href="#" onclick="addItemToTarget(this)" class="add-section">Link 3</a>
-        </div>
-    </div> -->
-</div> <!-- end buttons saving etc -->
+    </div>
+  </fieldset>
+  <fieldset id="rb-section-controls">
+    <legend>Add Sections</legend>
+    <div class="rb-flex-wrap">
+      <button type="button"  onclick="addMainSection('education-section')">+ Education Section</button>
+      <button type="button" onclick="addMainSection('work-section')">+ Work Section</button>
+      <button type="button" onclick="addMainSection('skills-section')">+ Skills Section</button>
+      <button type="button" onclick="addMainSection('summary-section')">+ Summary Section</button>
+      <button type="button" onclick="addMainSection('activities-section')">+ Activities Section</button>
+    </div>
+  </fieldset>
+</div> <!-- end toolbox buttons saving etc -->
 
 
 

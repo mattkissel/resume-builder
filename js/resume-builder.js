@@ -251,6 +251,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     if (!content || content.children.length > 0) return;
     // shadow.innerHTML = window.ResumeTemplates['resume-shell'];
 
+    addMainSection('summary-section');
     addMainSection('education-section');
     const schoolsList = shadow.querySelector('.rb-schools-list');
     addEntry('school-entry', schoolsList);
@@ -370,8 +371,6 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     shadowContents.remove();
   };
 
-
-  
 // export the html that will be used in our document
 async function exportHTMLResume(downloadNode){
   //changed this to rb-host

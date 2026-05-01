@@ -3,8 +3,30 @@
   --handle-color:#444;
 }
 
-/*_______________________________________________________________________*/
-/* Controls styling */
+/*_______________________________________________________________________________________________*/
+/* BUILDER TOOL BOX STYLING */
+button, .rb-save-load-btn, #rb-style-change{
+  cursor: pointer;
+  color:#6e79d6;
+  text-decoration: none;
+  font-family:sans-serif;
+  font-weight: bold;
+  font-size:medium;
+  align-items: center; 
+  /* keeps controls above content if they overlap */
+  z-index: 10;
+  background: var(--rb-bg, white);
+  padding:5px;
+  border:1px solid #aaa;
+  border-radius: 2px;
+  /* text-transform: uppercase; */
+}
+#rb-style-change{
+  text-transform: capitalize;
+}
+.rb-download-arrow{
+  font-weight: bold;
+}
 .rb-delete-sortable{
   background: none;
   color: inherit;
@@ -16,6 +38,24 @@
   font-weight: bold;
 }
 
+.rb-flex-wrap{
+  display: flex;
+  flex-wrap: wrap;
+  gap:10px;
+}
+#rb-file-controls,#rb-section-controls{
+  font-family: sans-serif;
+  /* text-transform: uppercase; */
+  
+  margin-top:2rem;
+}
+legend{
+  font-weight: bold;
+}
+#rb-toolbox{
+  max-width: 8.5in;
+  margin: 0 auto;
+}
 
 /* li{
   list-style-type: none;
@@ -114,6 +154,10 @@ li{
 .rb-do-not-export{
   opacity: 50%;
 }
+
+
+
+
 /*_______________________________________________________________________________________________*/
 /* DROPDOWN CSS */
 /* Dropdown Button */
@@ -125,18 +169,7 @@ li{
     border: none;
     cursor: pointer;
 }
-button{
-  cursor: pointer;
-  color:#6e79d6;
-  font-weight: bold;
-  align-items: center; 
-  /* keeps controls above content if they overlap */
-  z-index: 10;
-  background: var(--rb-bg, white);
-  padding:5px;
-  border:1px solid #aaa;
-  border-radius: 2px;
-}
+
 /* Dropdown button on hover & focus */
 .rb-dropbtn:hover, .rb-dropbtn:focus {
   background-color: rgb(165, 74, 52);;
@@ -223,20 +256,8 @@ button{
   content:"Type of Skills/certs, e.g. Language Skills, Computer Skills,etc ";
   color: rgb(172, 172, 172);
 }
-
-
-
-#rb-sortable-list {
-}
-
-.rb-sortable-item {
-  cursor: move;
-
-}
-/* minor and GPA maybe scholarships */
-
-
-/* visibility checkbox styling */
+/*_______________________________________________________________________________________________*/
+/* VISIBILITY CHECKBOX CONTROL */
 .rb-hide-label .rb-hide-toggle {
     appearance: none;
     background-color: #dfe1e4;
