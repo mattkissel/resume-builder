@@ -125,7 +125,7 @@ window.ResumeTemplates = {
 
   "responsibility-item": `
 <li class="rb-responsibility-item">
-  <span contenteditable="true">Responsibility or achievement</span>
+  <span contenteditable="true" data-placeholder="Responsibility or achievement" ></span>
   <span class="rb-controls"></span>
 </li>
 `,

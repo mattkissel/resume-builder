@@ -68,9 +68,6 @@ ul{
 .essentials>div{
     flex-basis:50%;
 }
-.hidden{
-    display: none;
-}
 .skill-lists>ul{
     /* not sure why it needs to be less than 50, it has no margins */
     flex-basis:42%;

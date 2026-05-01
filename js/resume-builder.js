@@ -9,17 +9,13 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
 (function () {
   let shadow;
   
-  
   document.addEventListener('DOMContentLoaded', () => {
     const host = document.getElementById('rb-host');
     shadow = host.attachShadow({ mode: 'open' });
     
     // const content = shadow.querySelector('#rb-resume-content');
     // if (!content || content.children.length > 0) return;
-    shadow.innerHTML = window.ResumeTemplates['resume-shell'];
-
-
-    buildDefaultResume()
+    
     initFromExisting();
     setupGlobalClickHandlers();
     observeAddsForSortables();
@@ -33,13 +29,16 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   
 
   function initFromExisting() {
-    // Initial setup for any controls and sortable lists already in the page
-    // Add controls for existing sections if empty
-    const resume = $('#rb-resume');
-    if (!resume) return;
+    const shadowContents = document.getElementById('rb-shadow-contents');
+    if (shadowContents) {
+      //if there is a shadow contents elements, load it
+      shadow.innerHTML = shadowContents.textContent;
+      shadowContents.remove();
+    }else{
+      //if there is no existing content start fresh.
+      buildDefaultResume()
+    }
 
-    // If there are no main sections present, we may optionally insert defaults:
-    // For compatibility with your existing HTML, don't overwrite. Just wire up sortables.
     makeListsSortable(shadow);
     addControlsToAll();
   }
@@ -60,8 +59,9 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
       if (ctrl.dataset.hasControls) return;
       ctrl.dataset.hasControls = '1';
       // Use a simple handle, a checkbox to hide, and a delete button
+      // useful handle symbol:&#8645; or ≡ or ☰
       ctrl.insertAdjacentHTML('beforeend', `
-        <span class="rb-handle" title="Drag to reorder">&#8645;</span>
+        <span class="rb-handle" title="Drag to reorder">☰</span>
         <label class="rb-hide-label"><input type="checkbox" class="rb-hide-toggle" checked /></label>
         <button type="button" class="rb-delete-sortable" data-action="remove-entry" title="Remove">&#9747;</button>
       `);
@@ -108,11 +108,15 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     shadow.addEventListener('change', (ev) => {
       if (!ev.target.matches('.rb-hide-toggle')) return;
       const checked = ev.target.checked;
+
       // The controls container is likely inside the immediate entry/section
-      const entry = ev.target.closest('.rb-entry, .rb-section, .rb-company, .rb-school, .rb-activity');
-      if (entry) {
-        entry.classList.toggle('rb-do-not-export', !checked);
-        entry.classList.toggle('hidden', !checked); // visual
+      // controls div -> its parent is the actual thing to hide
+      const controlsDiv = ev.target.closest('.rb-controls');
+      const target = controlsDiv ? controlsDiv.parentElement : null;
+      //const target = ev.target.closest('.rb-entry, .rb-section, .rb-company, .rb-school, .rb-activity');
+      if (target) {
+        target.classList.toggle('rb-do-not-export', !checked);
+        target.classList.toggle('hidden', !checked); // visual
       }
     });
 
@@ -163,7 +167,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   }
 
   // Sortable wiring; works when Sortable is present globally.
-  function makeListsSortable(root) {
+  function makeListsSortable(root = shadow) {
     // root can be document, element, or section
     // const lists = (root === document) ? $$('.rb-sortable-list') : $$('.rb-sortable-list', root);
     const lists = $$('.rb-sortable-list', root === shadow ? shadow : root);
@@ -235,6 +239,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
   };
 
   function buildDefaultResume() {
+    shadow.innerHTML = window.ResumeTemplates['resume-shell'];
     // only build if resume-content is empty
     const content = shadow.querySelector('#rb-resume-content');
     if (!content || content.children.length > 0) return;
@@ -270,10 +275,110 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
       shadow.querySelector('#rb-resume-style')
         .setAttribute('href', 'css/resume-styles/' + val + '.css');
     });
+  
+    document.getElementById('rb-resume-save-all').addEventListener('click', saveResumeTemplate)
+    document.getElementById('rb-export-resume').addEventListener('click', exportHTMLResume)
+
+    
   }
+
+
+
+
+  // export the html that will be used in our document
+  function saveResumeTemplate(){
+    // clone the shadow contents and strip initialization markers
+    // if we don't the sortable will not initialize properly
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = shadow.innerHTML;
+    tempDiv.querySelectorAll('[data-sortable-initialized]')
+      .forEach(el => el.removeAttribute('data-sortable-initialized'));
+    // tempDiv.querySelectorAll('[data-has-controls]')
+    //   .forEach(el => el.removeAttribute('data-has-controls'));
+      tempDiv.querySelectorAll('[data-sortable-initialized]')
+    .forEach(el => el.removeAttribute('data-sortable-initialized'));
+
+    // strip injected control contents but leave the empty .rb-controls div
+    tempDiv.querySelectorAll('.rb-controls').forEach(el => {
+      el.removeAttribute('data-has-controls');
+      el.innerHTML = '';
+    });
+
+
+    //store the shadow contents in a script tag to restore next load
+    //otherwise innerHTML of document will just ignore the shadow dom
+    const shadowContents = document.createElement('script');
+    shadowContents.id = 'rb-shadow-contents';
+    shadowContents.type = 'text/shadow-content'; //a fake type will be ignored by the browser i.e. not executed
+    shadowContents.textContent = tempDiv.innerHTML;
+    document.body.appendChild(shadowContents);
+    
+
+    a = document.createElement("a");
+    blob = new Blob(
+      [document.documentElement.innerHTML],
+      {type: "text/html"});
+
+    object_URL = URL.createObjectURL(blob);
+    a.href = object_URL;
+    a.download = "my_resume.builder.html";
+    a.click();
+    URL.revokeObjectURL(object_URL);
+
+    shadowContents.remove();
+  };
+
+
+  
+// export the html that will be used in our document
+async function exportHTMLResume(downloadNode){
+  //changed this to rb-host
+    const resumeElement = shadow.querySelector("#rb-resume");
+    let cleanedPrint = resumeElement.cloneNode(true);
+    
+    //if the display checkboxes aren't checked we don't want to export them to the resume
+    // they are in the controls so we need to check this before removing controls
+    // cleanedPrint.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach(
+    //   (el) => {
+    //     console.log("found element " + el);
+    //     el.parentElement.parentElement.remove();
+    // });
+    cleanedPrint.querySelectorAll('.rb-do-not-export').forEach((el) => { el.remove(); });
+    //we need to remove all the controls and buttons
+    cleanedPrint.querySelectorAll(".rb-controls").forEach((el) => el.remove());
+    cleanedPrint.querySelectorAll("button").forEach((el) => el.remove());
+    cleanedPrint.querySelectorAll("*").forEach((el) => { el.removeAttribute("style"); });
+    
+    // remove effectively empty contenteditable elements
+    cleanedPrint.querySelectorAll('[contenteditable]').forEach(el => {
+      if (isEffectivelyEmpty(el)) el.remove();
+      el.removeAttribute('contenteditable');
+    });
+
+
+    // Inline the CSS so the exported file is self-contained
+    const cssText = await getCSSAsText(); // fetch your stylesheet text
+
+    const html = `<!DOCTYPE html>
+    <html><head><style>${cssText}</style></head>
+    <body>${cleanedPrint.outerHTML}</body></html>`;
+
+    blob = new Blob([html], {type: "text/html"});
+    
+    //triggers the download with default name
+    a = document.createElement("a");
+    const object_URL = URL.createObjectURL(blob);
+    a.href = object_URL;
+    a.download = "resume.html";
+    a.click();
+
+    //Frees the memory
+    URL.revokeObjectURL(object_URL);
+};
+
+
+
 })();
-
-
 
 
 
@@ -328,73 +433,13 @@ function setupLoadButton()
 }
 
 
-// export the html that will be used in our document
-function exportHTMLResume(downloadNode){
-  //changed this to rb-host
-    const resumeElement = shadow.querySelector("#rb-resume");
-    let cleanedPrint = resumeElement.cloneNode(true);
-    
-    //if the display checkboxes aren't checked we don't want to export them to the resume
-    // they are in the controls so we need to check this before removing controls
-    // cleanedPrint.querySelectorAll('input[type="checkbox"]:not(:checked)').forEach(
-    //   (el) => {
-    //     console.log("found element " + el);
-    //     el.parentElement.parentElement.remove();
-    // });
-    cleanedPrint.querySelectorAll('.do-not-export').forEach((el) => {
-          console.log("found element " + el);
-          el.remove();
-      });
-    //we need to remove all the controls and buttons
-    cleanedPrint.querySelectorAll(".controls").forEach((el) => el.remove());
-    cleanedPrint.querySelectorAll("button").forEach((el) => el.remove());
-    cleanedPrint.querySelectorAll("*").forEach((el) => {
-      el.removeAttribute("style");
-    });
-    cleanedPrint.querySelectorAll('[contenteditable]').forEach(el => 
-      el.removeAttribute('contenteditable')
-    );
-
-
-    // Inline the CSS so the exported file is self-contained
-    const cssText = getCSSAsText(); // fetch your stylesheet text
-
-    const html = `<!DOCTYPE html>
-    <html><head><style>${cssText}</style></head>
-    <body>${cleanedPrint.outerHTML}</body></html>`;
-
-    blob = new Blob([html], {type: "text/html"});
-    
-    //triggers the download with default name
-    a = document.createElement("a");
-    const object_URL = URL.createObjectURL(blob);
-    a.href = object_URL;
-    a.download = "resume.html";
-    a.click();
-
-    //Frees the memory
-    URL.revokeObjectURL(object_URL);
-};
 
 
 
-// export the html that will be used in our document
-function saveBaseResume(){
-  a = document.createElement("a");
-  blob = new Blob(
-    [document.documentElement.innerHTML],
-    {type: "text/html"});
-  object_URL = URL.createObjectURL(blob);
-  a.href = object_URL;
-  a.download = "your_base_resume.html";
-  a.click();
-  URL.revokeObjectURL(object_URL);
-};
-
-async function getCSSAsText() {
-  const r = await fetch('css/resume-styles/vermillion.css');
-  return await r.text();
+function getCSSAsText(styleName = 'vermillion') {
+  return window.ResumeStyles[styleName] || '';
 }
+
 function confirmDelete(target){
   if (confirm("Are you sure you want to delete this item?")) 
   {
@@ -408,3 +453,7 @@ function dropDown(dropDown) {
 }
 
 
+function isEffectivelyEmpty(el) {
+  //return el.innerText.trim() === '';
+  return el.textContent.trim() === '' && !el.querySelector('img, video, embed');
+}

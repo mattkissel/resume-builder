@@ -1,5 +1,6 @@
 :root{
   --placeholder-color:#aaa;
+  --handle-color:#444;
 }
 
 /*_______________________________________________________________________*/
@@ -13,9 +14,7 @@
   cursor: pointer;
   outline: inherit;
 }
-.rb-controls{
-  /* margin-right:rem; */
-}
+
 
 /* li{
   list-style-type: none;
@@ -26,10 +25,33 @@
   float: right;
   font-size:medium;
   display:inline-block;
+  margin-top: .2rem;
+  margin-bottom: 0.2rem;
 }
 .rb-handle{
   cursor:grab;
   /* margin-left: 2em; */
+  &:active {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+  }
+  /* if we want our hamburger drag lines in CSS */
+  /* &:before {
+    content:""; 
+    display: inline-block;
+    width: 15px;
+    height: 12px;
+    background: linear-gradient(
+      to bottom,
+      var(--handle-color) 0, var(--handle-color) 2px,
+      transparent 2px, transparent 6px,
+      var(--handle-color) 6px, var(--handle-color) 8px,
+      transparent 8px, transparent 10px,
+      var(--handle-color) 10px, var(--handle-color) 12px
+    );
+    filter: brightness(80%);
+  } */
 }
 .rb-sortable-list > *:not(.rb-section-header):not(.rb-controls){
   border:2px solid rgb(114, 114, 114);
@@ -129,7 +151,9 @@ button{
   font-style: italic;
   pointer-events: none; /* Allows clicking through the text to focus the div */
 }
-
+.rb-section{
+    margin-top:10pt;
+}
 .rb-section-header:empty:before{
   content:"Section, eg. Education, Work Experience, Skills, Activities";
   color: rgb(172, 172, 172);
@@ -157,3 +181,69 @@ button{
 
 }
 /* minor and GPA maybe scholarships */
+
+
+/* visibility checkbox styling */
+.rb-hide-label .rb-hide-toggle {
+    appearance: none;
+    background-color: #dfe1e4;
+    border-radius: 72px;
+    border-style: none;
+    flex-shrink: 0;
+    height: 20px;
+    margin: 0;
+    position: relative;
+    width: 30px;
+  }
+
+  .rb-hide-label .rb-hide-toggle::before {
+    bottom: -6px;
+    content: "";
+    left: -6px;
+    position: absolute;
+    right: -6px;
+    top: -6px;
+  }
+
+  .rb-hide-label .rb-hide-toggle,
+  .rb-hide-label .rb-hide-toggle::after {
+    transition: all 100ms ease-out;
+  }
+
+  .rb-hide-label .rb-hide-toggle::after {
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    height: 14px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 14px;
+  }
+
+  .rb-hide-label input[type=checkbox] {
+    cursor: default;
+  }
+
+  .rb-hide-label .rb-hide-toggle:hover {
+    background-color: #c9cbcd;
+    transition-duration: 0s;
+  }
+
+  .rb-hide-label .rb-hide-toggle:checked {
+    background-color: #6e79d6;
+  }
+
+  .rb-hide-label .rb-hide-toggle:checked::after {
+    background-color: #fff;
+    left: 13px;
+  }
+
+  .rb-hide-label :focus:not(.focus-visible) {
+    outline: 0;
+  }
+
+  .rb-hide-label .rb-hide-toggle:checked:hover {
+    background-color: #535db3;
+  }
+  /* end visibility checkbox styling */
