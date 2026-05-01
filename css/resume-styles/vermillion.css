@@ -1,16 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 @font-face {
     font-family: "OpenSans";
-    src: url("../../fonts/OpenSans-Regular.ttf");
+    src:local("OpenSans"), 
+        local("Open Sans"), 
+        url("../../fonts/OpenSans-Regular.ttf") format('truetype'),
+        url('https://gstatic.com') format('woff2');
 }
-body{
-    width:800px;
+@font-face {
+    font-family: "NotoSans";
+    font-style: normal;
+    font-weight: 100 900; /* Supports variable weights */
+    src:local('Noto Sans'), 
+        url("../../fonts/NotoSans-VariableFont_wdth-wght.ttf") format('truetype'),
+        url('https://gstatic.com') format('woff2');
+}
+@font-face {
+    font-family: "NotoSans";
+    font-style: italic;
+    font-weight: 100 900; /* Supports variable weights */
+    src:local('Noto Sans Italic'), 
+        url("../../fonts/NotoSans-Italic-VariableFont_wdth-wght.ttf") format('truetype'),
+        url('https://gstatic.com') format('woff2');
+}
+/* body{
+    max-width:8.5in;
     margin-left: auto;
     margin-right: auto;
     font-family: OpenSans, Helvetica, sans-serif;
     font-size:10pt;
     color: rgb(66, 66, 66);
     margin:35pt auto 100pt auto;
-}
+} */
 
 /*This is resume-building breaking*/
 #rb-printable-resume{
@@ -20,6 +41,13 @@ body{
     display: flex;
     align-items: stretch;
     flex-direction: row;
+    max-width:8.5in;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: OpenSans, Helvetica, sans-serif;
+    font-size:10pt;
+    color: rgb(66, 66, 66);
+    margin:35pt auto 100pt auto;
 }
 ul{
     margin-top: 0;

@@ -21,6 +21,12 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     observeAddsForSortables();
     fullyClearContentEditables();
     setupToolbarHandlers();
+    if (window.ResumeStylesReady) {
+        // resume-styles-ready already fired before we got here
+        loadDefaultStyle();
+    } else {
+        document.addEventListener('resume-styles-ready', loadDefaultStyle);
+    }
   });
   // helper
   const $ = (sel, root = shadow) => root.querySelector(sel);
@@ -59,9 +65,9 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
       if (ctrl.dataset.hasControls) return;
       ctrl.dataset.hasControls = '1';
       // Use a simple handle, a checkbox to hide, and a delete button
-      // useful handle symbol:&#8645; or ≡ or ☰
+      // useful handle symbol:&#8645; or ≡ or ☰ (&#9776)
       ctrl.insertAdjacentHTML('beforeend', `
-        <span class="rb-handle" title="Drag to reorder">☰</span>
+        <span class="rb-handle" title="Drag to reorder">&#9776;</span>
         <label class="rb-hide-label"><input type="checkbox" class="rb-hide-toggle" checked /></label>
         <button type="button" class="rb-delete-sortable" data-action="remove-entry" title="Remove">&#9747;</button>
       `);
@@ -262,22 +268,58 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
     addEntry('activity-entry', activitiesList);
   }
 
+
+  
+  function loadDefaultStyle(){
+    // Initial load — apply default style
+    //an existing style would be formatted as such
+    //css/resume-styles/MY_STYLE.css
+    const existingStylePath =  shadow.querySelector('#rb-resume-style').getAttribute('href');
+    const existingStyleName = existingStylePath.replace(/^.*\/|\.css$/g, '');
+    const defaultStyle =  existingStyleName ? existingStyleName : 'vermillion';
+    loadResumeStyle(defaultStyle);
+
+    // Populate dropdown from registered styles
+    const select = document.getElementById('rb-style-change');
+    Object.keys(window.ResumeStyles).forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+    });
+
+    select.addEventListener('change', () => {
+        loadResumeStyle(select.value);
+    });
+  }
   // if we want to change styles before we download the resume
-  function loadNewStyles(){
-      newStyle = document.getElementById("rb-style-change").value;
-      console.log("new style: " + newStyle);
-      shadow.querySelector("#rb-resume-style").setAttribute("href","css/resume-styles/"+newStyle+".css")
+  function loadResumeStyle(newStyle){
+    shadow.querySelector('#rb-resume-style')
+      .setAttribute('href', 'css/resume-styles/' + newStyle + '.css');
+    syncFontsForStyle(newStyle);
+  }
+  function syncFontsForStyle(styleName) {
+      const meta = window.ResumeStylesMeta[styleName] || {};
+      const fonts = meta.fonts || [];
+
+      // Remove any previously injected theme fonts
+      document.querySelectorAll('link[data-resume-font]').forEach(el => el.remove());
+
+      // Add new ones
+      fonts.forEach(href => {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.setAttribute('data-resume-font', styleName);
+          link.href = href;
+          document.head.appendChild(link);
+      });
   }
   function setupToolbarHandlers()
   {
-    document.getElementById('rb-style-change').addEventListener('change', () => {
-    const val = document.getElementById('rb-style-change').value;
-      shadow.querySelector('#rb-resume-style')
-        .setAttribute('href', 'css/resume-styles/' + val + '.css');
-    });
+    // document.getElementById('rb-style-change').addEventListener('change', loadResumeStyle );
   
-    document.getElementById('rb-resume-save-all').addEventListener('click', saveResumeTemplate)
-    document.getElementById('rb-export-resume').addEventListener('click', exportHTMLResume)
+    document.getElementById('rb-resume-save-all').addEventListener('click', saveResumeTemplate);
+    document.getElementById('rb-export-resume').addEventListener('click', exportHTMLResume);
 
     
   }
@@ -357,7 +399,9 @@ async function exportHTMLResume(downloadNode){
 
 
     // Inline the CSS so the exported file is self-contained
-    const cssText = await getCSSAsText(); // fetch your stylesheet text
+    // get the current CSS from the Selector
+    const cssStyleName = document.getElementById("rb-style-change").value;;
+    const cssText = await getCSSAsText(cssStyleName); // fetch your stylesheet text
 
     const html = `<!DOCTYPE html>
     <html><head><style>${cssText}</style></head>
@@ -375,7 +419,6 @@ async function exportHTMLResume(downloadNode){
     //Frees the memory
     URL.revokeObjectURL(object_URL);
 };
-
 
 
 })();
@@ -433,10 +476,8 @@ function setupLoadButton()
 }
 
 
-
-
-
 function getCSSAsText(styleName = 'vermillion') {
+  console.log("found "+ window.ResumeStyles[styleName]);
   return window.ResumeStyles[styleName] || '';
 }
 
@@ -448,9 +489,6 @@ function confirmDelete(target){
   }
 }
 
-function dropDown(dropDown) {
-  dropDown.getElementsByClassName("dropdown-content")[0].classList.toggle("show");
-}
 
 
 function isEffectivelyEmpty(el) {

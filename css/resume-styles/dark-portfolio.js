@@ -1,0 +1,316 @@
+window.ResumeStyles = window.ResumeStyles || {};
+window.ResumeStylesMeta = window.ResumeStylesMeta || {};
+//////////////////////////////////////////////////////////
+//////// DARK PORTFOLIO STYLES
+//////////////////////////////////////////////////////////
+window.ResumeStylesMeta['dark-portfolio'] = {
+    fonts: ['https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap']
+}
+
+window.ResumeStyles['dark-portfolio'] = `
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap');
+
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:host, :root {
+    --bg:           #09090b;       /* zinc-950 */
+    --surface:      #18181b;       /* zinc-900 */
+    --border:       #27272a;       /* zinc-800 */
+    --border-hover: #3f3f46;       /* zinc-700 */
+    --text:         #f4f4f5;       /* zinc-100 */
+    --text-muted:   #a1a1aa;       /* zinc-400 */
+    --text-faint:   #71717a;       /* zinc-500 */
+    --text-dimmer:  #52525b;       /* zinc-600 */
+    --accent:       #ac3125;
+    --accent-dim:   rgba(172, 49, 37, 0.15);
+    --mono:         'JetBrains Mono', 'Courier New', monospace;
+    --sans:         'DM Sans', Helvetica, sans-serif;
+    --radius:       12px;
+}
+
+/* ─── Reset / Base ───────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    /*color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 10pt;
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 48px auto 120px auto;
+    padding: 0 24px;
+    -webkit-font-smoothing: antialiased; */
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+li {
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+}
+
+a {
+    color: var(--text-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+a:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+}
+
+/* ─── Printable wrapper ──────────────────────────────────── */
+#rb-printable-resume {
+    width: 100%;
+}
+
+/* ─── Layout: single column ──────────────────────────────── */
+#rb-resume {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--bg);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 10pt;
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 48px auto 120px auto;
+    padding: 0 24px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Contact / Header block ─────────────────────────────── */
+#rb-contact-info {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+#rb-name {
+    font-family: var(--mono);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+}
+
+/* Subtitle / role line — add a <p class="rb-role"> if desired */
+.rb-role {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 14px;
+}
+
+/* Contact links sit inline */
+#rb-contact-info ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+#rb-contact-info li {
+    margin: 0;
+}
+
+/* ─── Main content area ──────────────────────────────────── */
+#rb-resume-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* ─── Section header ─────────────────────────────────────── */
+.rb-section-header {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+}
+
+/* Red accent tick before each section header */
+.rb-section-header::before {
+    content: '▸ ';
+    color: var(--accent);
+}
+
+/* ─── Company / Job block ────────────────────────────────── */
+.rb-company,
+.rb-activity {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s;
+}
+
+.rb-company:hover,
+.rb-activity:hover {
+    border-color: var(--border-hover);
+}
+
+/* Row: job title + dates */
+.rb-essentials {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    margin-bottom: 6px;
+}
+
+.rb-job-title,
+.rb-school-name {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.rb-company-name,
+.rb-location {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    font-weight: 400;
+}
+
+.rb-job-dates,
+.rb-date,
+.rb-school-location {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dimmer);
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* ─── Skills section ─────────────────────────────────────── */
+.rb-skill-lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+}
+
+.rb-skill-lists > ul {
+    flex-basis: 46%;
+    list-style: disc;
+    padding-left: 1.1rem;
+}
+
+/* Skill badge alternative — wrap items in <span class="rb-badge"> */
+.rb-badge {
+    display: inline-block;
+    background: #27272a;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin: 2px 2px 2px 0;
+}
+
+/* ─── List titles ────────────────────────────────────────── */
+.rb-list-title,
+.rb-activity-title,
+.rb-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    margin-bottom: 4px;
+    display: block;
+}
+
+/* Bold list items */
+ul > .rb-bold,
+.rb-major {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ─── Education block ────────────────────────────────────── */
+.rb-school-name {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.rb-major {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+}
+
+/* ─── Utility ────────────────────────────────────────────── */
+.rb-hide {
+    display: none;
+}
+
+/* ─── Print styles ───────────────────────────────────────── */
+@media print {
+    body {
+        background: #fff;
+        color: #222;
+        font-size: 9pt;
+        margin: 0;
+        padding: 0 20pt;
+        max-width: 100%;
+    }
+
+    :root {
+        --bg:         #fff;
+        --surface:    #f9f9f9;
+        --border:     #ddd;
+        --text:       #111;
+        --text-muted: #333;
+        --text-faint: #555;
+        --text-dimmer:#777;
+    }
+
+    #rb-name {
+        color: var(--accent);
+    }
+
+    .rb-company,
+    .rb-activity {
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+
+    a {
+        border-bottom: none;
+        color: var(--text-faint);
+    }
+}
+
+
+`

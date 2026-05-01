@@ -33,7 +33,7 @@ window.ResumeTemplates = {
     <!-- existing entries will be inserted here -->
   </div>
   <div class="rb-section-actions">
-    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="school-entry">Add School</button>
+    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="school-entry">+ School</button>
   </div>
 </section>
 `,
@@ -46,7 +46,7 @@ window.ResumeTemplates = {
     <!-- job entries go here -->
   </div>
   <div class="rb-section-actions">
-    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="job-entry">Add Job</button>
+    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="job-entry">+ Job</button>
   </div>
 </section>
 `,
@@ -59,7 +59,7 @@ window.ResumeTemplates = {
     <!-- skill items here -->
   </ul>
   <div class="rb-section-actions">
-    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="skill-item">Add Skill</button>
+    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="skill-item">+ Skill</button>
   </div>
 </section>
 `,
@@ -70,7 +70,7 @@ window.ResumeTemplates = {
   <h2 class="rb-section-header">Activities</h2>
   <div class="rb-activities-list rb-sortable-list"></div>
   <div class="rb-section-actions">
-    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="activity-entry">Add Activity</button>
+    <button type="button" class="rb-btn-add" data-action="add-entry" data-template="activity-entry">+ Activity</button>
   </div>
 </section>
 `,
@@ -90,9 +90,6 @@ window.ResumeTemplates = {
   <div class="rb-description" 
   data-placeholder="Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study" 
   contenteditable="true"></div>
-  <div class="rb-entry-actions">
-    <button type="button" data-action="remove-entry">Remove</button>
-  </div>
 </div>
 `,
 
@@ -116,9 +113,8 @@ window.ResumeTemplates = {
     data-action="add-entry" 
     data-template="responsibility-item" 
     data-target=".rb-responsibilities">
-      Add Responsibility 
+      + Responsibility 
     </button>
-    <button type="button" data-action="remove-entry">Remove Job</button>
   </div>
 </div>
 `,
@@ -146,9 +142,6 @@ window.ResumeTemplates = {
     <div class="rb-location" data-placeholder="City, State, Country" contenteditable="true"></div>
   </div>
   <div class="rb-description" data-placeholder="Short summary" contenteditable="true"></div>
-  <div class="rb-entry-actions">
-    <button type="button" data-action="remove-entry">Remove</button>
-  </div>
 </div>
 `
 };

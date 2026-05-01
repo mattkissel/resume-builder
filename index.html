@@ -20,16 +20,15 @@
     <a href="#" id="rb-resume-save-all">Save Master Resume</a>
     <button id="rb-load-button">Load File</button>
     <input type="file" id="rb-file-input" accept=".html" >
-
-    <select id="rb-style-change">
-        <option value="vermillion">Vermillion</option>
-        <option value="standard">Standard</option>
-    </select>
+    <label for="rb-style-change">
+        Change the Resume Style:
+        <select id="rb-style-change"></select>
+    </label>
     <button onclick="loadNewStyles()">Reload Styles</button>
     <div id="rb-section-controls">
-  <button type="button" onclick="addMainSection('rb-education-section')">Add Education Section</button>
-  <button type="button" onclick="addMainSection('rb-work-section')">Add Work Section</button>
-  <button type="button" onclick="addMainSection('rb-skills-section')">Add Skills Section</button>
+  <button type="button" onclick="addMainSection('rb-education-section')">+ Education Section</button>
+  <button type="button" onclick="addMainSection('rb-work-section')">+ Work Section</button>
+  <button type="button" onclick="addMainSection('rb-skills-section')">+ Skills Section</button>
 </div>
     <!-- <div class="dropdown">
         <button onclick="dropDown(this.parentNode)" class="dropbtn">+</button>

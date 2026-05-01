@@ -1,4 +1,33 @@
+
+
 window.ResumeStyles = window.ResumeStyles || {};
+window.ResumeStylesMeta = window.ResumeStylesMeta || {};
+window.ResumeStylesReady = false;
+
+const styles = [
+    // 'vermillion',
+    'dark-portfolio',
+    // 'classic',
+];
+
+let loaded = 0;
+styles.forEach(name => {
+    const script = document.createElement('script');
+    script.src = `css/resume-styles/${name}.js`;
+    script.onload = () => {
+        loaded++;
+        if (loaded === styles.length) {
+            console.log("throw loaded styles event");
+            window.ResumeStylesReady = true;
+            document.dispatchEvent(new Event('resume-styles-ready'));
+        }
+    };
+    document.head.appendChild(script);
+});
+
+window.ResumeStylesMeta['vermillion'] = {
+    fonts: ['https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap']
+}
 window.ResumeStyles['vermillion'] = `
 @font-face {
     font-family: "OpenSans";
@@ -109,6 +138,8 @@ ul>.rb-bold,.rb-company-name,.rb-major{
 }
 
 `;
+// STANDARD RESUME STYLES
+
 
 window.ResumeStyles['standard'] = `
     

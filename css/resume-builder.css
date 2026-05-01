@@ -1,5 +1,5 @@
 :root{
-  --placeholder-color:#aaa;
+  --placeholder-color: rgba(170,170,170,0.5);
   --handle-color:#444;
 }
 
@@ -13,6 +13,7 @@
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  font-weight: bold;
 }
 
 
@@ -21,13 +22,56 @@
 } */
 /*________________________________________________________________________*/
 /*Sortable styling*/
-.rb-controls{
+/* .rb-controls{
   float: right;
   font-size:medium;
-  display:inline-block;
+  display:flex;
   margin-top: .2rem;
   margin-bottom: 0.2rem;
+} */
+
+/* every element that has a .rb-controls child needs this */
+:has(> .rb-controls) {
+  position: relative;
 }
+
+.rb-controls {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  /* keeps controls above content if they overlap */
+  z-index: 10;
+  /* only show on hover so they don't obscure content */
+  opacity: 0;
+  transition: opacity 0.15s;
+  /* fade out the content behind the controls */
+  /* background: linear-gradient(to left, var(--rb-bg, white) 80%, transparent); */
+  background: var(--rb-bg, white);
+  padding:5px;
+  /* give the gradient room to fade */
+  /* padding-left: 10px; 
+  padding-right: 4px;
+  padding-top: 5px;
+  padding-bottom: 5px; */
+  border-radius: 2px;
+}
+
+:has(> .rb-controls):hover > .rb-controls {
+  opacity: 1;
+}
+
+.rb-entry{
+  margin:10px 0;
+}
+li{
+  min-height: 3rem;
+  margin:10px 0;
+}
+
 .rb-handle{
   cursor:grab;
   /* margin-left: 2em; */
@@ -83,6 +127,15 @@
 }
 button{
   cursor: pointer;
+  color:#6e79d6;
+  font-weight: bold;
+  align-items: center; 
+  /* keeps controls above content if they overlap */
+  z-index: 10;
+  background: var(--rb-bg, white);
+  padding:5px;
+  border:1px solid #aaa;
+  border-radius: 2px;
 }
 /* Dropdown button on hover & focus */
 .rb-dropbtn:hover, .rb-dropbtn:focus {
