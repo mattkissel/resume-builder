@@ -36,8 +36,8 @@ window.ResumeStyles['dark-portfolio'] = `
 }
 
 body {
-    background-color: var(--bg);
-    /*color: var(--text-muted);
+    /* background-color: var(--bg);
+    color: var(--text-muted);
     font-family: var(--sans);
     font-size: 10pt;
     line-height: 1.6;
@@ -88,7 +88,7 @@ a:hover {
     line-height: 1.6;
     max-width: 780px;
     margin: 48px auto 120px auto;
-    padding: 0 24px;
+    padding: 20px 24px;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -154,8 +154,11 @@ a:hover {
 }
 
 /* Red accent tick before each section header */
+/* small : &#x25B8; */
+/* Standard Right Triangle  &#x25B6;*/
+/* Right Pointer &#x25BA; */
 .rb-section-header::before {
-    /* content: '▸ ';*/
+    /* content: '▸ '; */
     content: '\\25B8 ';
     color: var(--accent);
 }
@@ -181,8 +184,13 @@ a:hover {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 4px 12px;
+    gap: 0px 4px;
     margin-bottom: 6px;
+}
+
+.rb-essentials > * {
+  /* flex: 0 0 calc(50% - 10px);  */
+  flex: calc(50% - 10px);;
 }
 
 .rb-job-title,
@@ -201,7 +209,9 @@ a:hover {
     color: var(--text-faint);
     font-weight: 400;
 }
-
+.rb-location{
+    text-align: right;
+}
 .rb-job-dates,
 .rb-date,
 .rb-school-location {
@@ -210,6 +220,7 @@ a:hover {
     color: var(--text-dimmer);
     margin-left: auto;
     white-space: nowrap;
+    text-align: right;
 }
 
 /* ─── Skills section ─────────────────────────────────────── */
@@ -248,7 +259,7 @@ a:hover {
     font-weight: 600;
     color: var(--text);
     text-decoration: none;
-    margin-bottom: 4px;
+    /* margin-bottom: 4px; */
     display: block;
 }
 
@@ -312,6 +323,5 @@ ul > .rb-bold,
         color: var(--text-faint);
     }
 }
-
 
 `

@@ -148,7 +148,6 @@ window.ResumeTemplates = {
   <div class="rb-essentials">
     <div class="rb-activity-title rb-title" contenteditable="true" data-placeholder="Title of your Activity"></div>
     <div class="rb-date" data-placeholder="10/2000 - 10/2000" contenteditable="true"></div>
-    <div class="rb-company-name" data-placeholder="Organization Name" contenteditable="true"></div>
     <div class="rb-location" data-placeholder="City, State, Country" contenteditable="true"></div>
   </div>
   <div class="rb-description" data-placeholder="Short summary" contenteditable="true"></div>

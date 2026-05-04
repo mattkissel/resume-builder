@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+    <html><head><style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap');
+
+
+/* ─── Tokens ─────────────────────────────────────────────── */
+:host, :root {
+    --bg:           #09090b;       /* zinc-950 */
+    --surface:      #18181b;       /* zinc-900 */
+    --border:       #27272a;       /* zinc-800 */
+    --border-hover: #3f3f46;       /* zinc-700 */
+    --text:         #f4f4f5;       /* zinc-100 */
+    --text-muted:   #a1a1aa;       /* zinc-400 */
+    --text-faint:   #71717a;       /* zinc-500 */
+    --text-dimmer:  #52525b;       /* zinc-600 */
+    --accent:       #ac3125;
+    --accent-dim:   rgba(172, 49, 37, 0.15);
+    --mono:         'JetBrains Mono', 'Courier New', monospace;
+    --sans:         'DM Sans', Helvetica, sans-serif;
+    --radius:       12px;
+}
+
+/* ─── Reset / Base ───────────────────────────────────────── */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    /* background-color: var(--bg);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 10pt;
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 48px auto 120px auto;
+    padding: 0 24px;
+    -webkit-font-smoothing: antialiased; */
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+li {
+    margin-top: 0.3rem;
+    color: var(--text-muted);
+}
+
+a {
+    color: var(--text-faint);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+a:hover {
+    color: var(--text);
+    border-color: var(--border-hover);
+}
+
+/* ─── Printable wrapper ──────────────────────────────────── */
+#rb-printable-resume {
+    width: 100%;
+}
+
+/* ─── Layout: single column ──────────────────────────────── */
+#rb-resume {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: var(--bg);
+    color: var(--text-muted);
+    font-family: var(--sans);
+    font-size: 10pt;
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 48px auto 120px auto;
+    padding: 20px 24px;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Contact / Header block ─────────────────────────────── */
+#rb-contact-info {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+#rb-name {
+    font-family: var(--mono);
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+}
+
+/* Subtitle / role line — add a <p class="rb-role"> if desired */
+.rb-role {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-dimmer);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 14px;
+}
+
+/* Contact links sit inline */
+#rb-contact-info ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 12px;
+}
+
+#rb-contact-info li {
+    margin: 0;
+}
+
+/* ─── Main content area ──────────────────────────────────── */
+#rb-resume-content {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* ─── Section header ─────────────────────────────────────── */
+.rb-section-header {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+}
+
+/* Red accent tick before each section header */
+/* small : &#x25B8; */
+/* Standard Right Triangle  &#x25B6;*/
+/* Right Pointer &#x25BA; */
+.rb-section-header::before {
+    /* content: '▸ '; */
+    content: '\25B8 ';
+    color: var(--accent);
+}
+
+/* ─── Company / Job block ────────────────────────────────── */
+.rb-company,
+.rb-activity {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 12px;
+    transition: border-color 0.15s;
+}
+
+.rb-company:hover,
+.rb-activity:hover {
+    border-color: var(--border-hover);
+}
+
+/* Row: job title + dates */
+.rb-essentials {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0px 4px;
+    margin-bottom: 6px;
+}
+
+.rb-essentials > * {
+  /* flex: 0 0 calc(50% - 10px);  */
+  flex: calc(50% - 10px);;
+}
+
+.rb-job-title,
+.rb-school-name {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.rb-company-name,
+.rb-location {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+    font-weight: 400;
+}
+.rb-location{
+    text-align: right;
+}
+.rb-job-dates,
+.rb-date,
+.rb-school-location {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dimmer);
+    margin-left: auto;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* ─── Skills section ─────────────────────────────────────── */
+.rb-skill-lists {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+}
+
+.rb-skill-lists > ul {
+    flex-basis: 46%;
+    list-style: disc;
+    padding-left: 1.1rem;
+}
+
+/* Skill badge alternative — wrap items in <span class="rb-badge"> */
+.rb-badge {
+    display: inline-block;
+    background: #27272a;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin: 2px 2px 2px 0;
+}
+
+/* ─── List titles ────────────────────────────────────────── */
+.rb-list-title,
+.rb-activity-title,
+.rb-title {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    /* margin-bottom: 4px; */
+    display: block;
+}
+
+/* Bold list items */
+ul > .rb-bold,
+.rb-major {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* ─── Education block ────────────────────────────────────── */
+.rb-school-name {
+    display: block;
+    margin-bottom: 2px;
+}
+
+.rb-major {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--text-faint);
+}
+
+/* ─── Utility ────────────────────────────────────────────── */
+.rb-hide {
+    display: none;
+}
+
+/* ─── Print styles ───────────────────────────────────────── */
+@media print {
+    body {
+        background: #fff;
+        color: #222;
+        font-size: 9pt;
+        margin: 0;
+        padding: 0 20pt;
+        max-width: 100%;
+    }
+
+    :root {
+        --bg:         #fff;
+        --surface:    #f9f9f9;
+        --border:     #ddd;
+        --text:       #111;
+        --text-muted: #333;
+        --text-faint: #555;
+        --text-dimmer:#777;
+    }
+
+    #rb-name {
+        color: var(--accent);
+    }
+
+    .rb-company,
+    .rb-activity {
+        border: 1px solid #ddd;
+        break-inside: avoid;
+    }
+
+    a {
+        border-bottom: none;
+        color: var(--text-faint);
+    }
+}
+
+</style></head>
+    <body><div id="rb-resume">
+    <div id="rb-contact-info">
+      <div id="rb-name" data-placeholder="FirstName Lastname">Rico Johnson</div>
+      <div id="rb-phone-number" data-placeholder="###-####-####">555-555-5555</div>
+      <div id="rb-email" data-placeholder="youremail@domain.com">rjohnson@fake.com</div>
+      <div id="rb-website" data-placeholder="https://www.fakesite.com/"><span>https://www.lipsum.com/</span></div>
+    </div>
+    <!-- could consider renaming this since contact info is sort of content -->
+    <div id="rb-resume-content" class="rb-sortable-list" data-sortable-initialized="1">
+      <!-- sections go here -->
+<section class="rb-section rb-summary" data-type="summary">
+  
+  <h2 class="rb-section-header">Professional Summary</h2>
+  <div class="rb-description" data-placeholder="E.g. Experienced Dungeon Master with over fifteen years of professional experience seeks to leverage top-notch dice-rolling and dungeon planning skills to boost efficiency at Dungeoneering Corp. Managed a unkempt, unbathed team of four players in a high-volume, low-rolling environment. Grew the number of player deaths by 32% a year, and reduced planning time by 75%. Willing to relocate if rulebooks are provided."><span>Dynamic and resourceful marketing professional with a proven track record of driving engagement across digital and interplanetary channels. Adept at crafting compelling campaigns under extreme conditions, including high-pressure Y2K crisis environments and active extraterrestrial combat zones. Combines data-driven strategy with tactical survival skills to deliver results, boost morale, and ensure brand continuity, even in the face of existential threats.</span></div>
+</section>
+
+    <section class="rb-section rb-education" data-type="education">
+  
+  <h2 class="rb-section-header">Education</h2>
+  <div class="rb-schools-list rb-sortable-list" data-sortable-initialized="1">
+    <!-- existing entries will be inserted here -->
+  <div class="rb-school rb-entry">
+  
+  <div class="rb-essentials">
+    <div class="rb-school-name" data-placeholder="University/School Name">Harvard University</div>
+    <div class="rb-location" data-placeholder="City, State, Country">New York City, NY</div>
+    <div class="rb-major" data-placeholder="BS in Major/Program">BA in Being Very Cool</div>
+    <div class="rb-date" data-placeholder="2000 - 2050">2013</div>
+  </div>
+  <div class="rb-minor" data-placeholder="Minor: Your College Minor or some certificate">Minor: Macroeconomics</div>
+  <div class="rb-gpa" data-placeholder="GPA:0.0/0.0">GPA 2.77</div>
+  <div class="rb-description" data-placeholder="Add a description here, eg. 2005 - Summer study abroad in Spain, where I mostly didn't study">Studied cool kids abroad in Sweden for two semesters. Founding member of the yoyo-ing club and volunteer dandelion seed blower.</div>
+</div></div>
+  <div class="rb-section-actions">
+    
+  </div>
+</section><section class="rb-section rb-work-experience" data-type="work-experience">
+  
+  <h2 class="rb-section-header">Work Experience</h2>
+  <div class="rb-companies-list rb-sortable-list" data-sortable-initialized="1">
+    <!-- job entries go here -->
+  <div class="rb-company rb-entry" draggable="false">
+  
+  <div class="rb-essentials">
+    <div class="rb-job-title rb-title" data-placeholder="Your Job Title Here">Marketing Director</div>
+    <div class="rb-job-dates rb-date" data-placeholder="10/2000 - 10/2000">May 2021 – March 2026</div>
+    <div class="rb-company-name" data-placeholder="Company Name Here">Marketscape Navigator</div>
+    <div class="rb-location" data-placeholder="City, State, Country">Boise, ID</div>
+  </div>
+  
+
+  <ul class="rb-responsibilities rb-sortable-list" data-sortable-initialized="1">
+    <!-- responsibilities inserted here -->
+  <li class="rb-responsibility-item" draggable="false">
+  <span>Organized 90% of successful email campaigns, and 100% of the unsuccessful ones.</span>
+  
+</li><li class="rb-responsibility-item">
+  <span>Commanded a troupe of three marketing associates to sail the high seas of international commerce.</span>
+  
+</li><li class="rb-responsibility-item">
+  <span>Improved lunch related KPIs including time spent at lunch table and volume of cocktails consumed. Exceeded all initial estimates of lunch calories.<br></span>
+  
+</li><li class="rb-responsibility-item">
+  <span>Led team retreats to the nearby skatepark on a daily basis at 10AM, boosting team morale.<br></span>
+  
+</li><li class="rb-responsibility-item">
+  <span>Did market research on which supermarket had the freshest avocados.<br></span>
+  
+</li></ul>
+
+  <div class="rb-entry-actions">
+    
+  </div>
+</div><div class="rb-company rb-entry">
+  
+  <div class="rb-essentials">
+    <div class="rb-job-title rb-title" data-placeholder="Your Job Title Here">Marketing Intern</div>
+    <div class="rb-job-dates rb-date" data-placeholder="10/2000 - 10/2000">Sept 1999 - July 2000</div>
+    <div class="rb-company-name" data-placeholder="Company Name Here">Mobile Infantry Communications Division</div>
+    <div class="rb-location" data-placeholder="City, State, Country">The Big Apple</div>
+  </div>
+  
+
+  <ul class="rb-responsibilities rb-sortable-list" data-sortable-initialized="1">
+    <!-- responsibilities inserted here -->
+  <li class="rb-responsibility-item">
+  <span data-placeholder="Responsibility or achievement">Led the fight against the Y2K bugs after the attack on Buenos Aires.</span>
+  
+</li><li class="rb-responsibility-item">
+  <span data-placeholder="Responsibility or achievement">Team captain for the company Jump Ball team.<br></span>
+  
+</li></ul>
+
+  <div class="rb-entry-actions">
+    
+  </div>
+</div></div>
+  <div class="rb-section-actions">
+    
+  </div>
+</section><section class="rb-section rb-skills" data-type="skills">
+  
+  <h2 class="rb-section-header">Skills</h2>
+  <ul class="rb-skill-list rb-sortable-list" data-sortable-initialized="1">
+    <!-- skill items here -->
+  <li class="rb-skill-item"><span data-placeholder="New Skill">Integrated Marketing Strategy (Digital, Print, Galactic Broadcast)</span>
+  
+</li><li class="rb-skill-item"><span data-placeholder="New Skill">Rapid Problem Solving Under Fire</span>
+  
+</li><li class="rb-skill-item"><span data-placeholder="New Skill">Legacy System Troubleshooting (COBOL, mainframes, “doomsday clocks”)</span>
+  
+</li><li class="rb-skill-item"><span data-placeholder="New Skill">Stakeholder Communication (executives, generals, civilians)</span>
+  
+</li></ul>
+  <div class="rb-section-actions">
+    
+  </div>
+</section><section class="rb-section rb-activities" data-type="activities">
+  
+  <h2 class="rb-section-header">Activities</h2>
+  <div class="rb-activities-list rb-sortable-list" data-sortable-initialized="1"><div class="rb-activity rb-entry">
+  
+  <div class="rb-essentials">
+    <div class="rb-activity-title rb-title" data-placeholder="Title of your Activity">Disaster Preparedness Workshop Leader</div>
+    <div class="rb-date" data-placeholder="10/2000 - 10/2000">9/1999</div>
+    <div class="rb-location" data-placeholder="City, State, Country">Cleveland, Rocks</div>
+  </div>
+  <div class="rb-description" data-placeholder="Short summary">Conducted seminars on crisis communication and personal readiness for both digital and insect related catastrophes.</div>
+
+</div><div class="rb-activity rb-entry">
+  
+  <div class="rb-essentials">
+    <div class="rb-activity-title rb-title" data-placeholder="Title of your Activity">Open Source Preservation Contributor</div>
+    <div class="rb-date" data-placeholder="10/2000 - 10/2000">12/2000</div>
+    <div class="rb-location" data-placeholder="City, State, Country">HQ, Geneva</div>
+  </div>
+  <div class="rb-description" data-placeholder="Short summary">Helped archive and document legacy codebases as well as preserve and taxidermy old bugs for historical and emergency-use purpose.</div>
+
+</div></div>
+  <div class="rb-section-actions">
+    
+  </div>
+</section></div>
+  </div></body></html>

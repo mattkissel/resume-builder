@@ -282,6 +282,7 @@ const TEMPLATE_HTML_PATH = "content-templates.html";
 
     // Populate dropdown from registered styles
     const select = document.getElementById('rb-style-change');
+    select.replaceChildren();
     Object.keys(window.ResumeStyles).forEach(name => {
         const opt = document.createElement('option');
         opt.value = name;
